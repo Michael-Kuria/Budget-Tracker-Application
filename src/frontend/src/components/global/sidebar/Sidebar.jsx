@@ -16,6 +16,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ShowChartOutlinedIcon from "@mui/icons-material/ShowChartOutlined";
 import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
+import { Link } from "react-router-dom";
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open" && prop !== "drawerWidth",
@@ -73,7 +74,9 @@ const Sidebar = ({ drawerOpen, toggleDrawer, drawerWidth }) => {
             <ListItemIcon>
               <HomeOutlinedIcon />
             </ListItemIcon>
-            <ListItemText>Overview</ListItemText>
+            <ListItemText>
+              <Link to="/">Overview</Link>
+            </ListItemText>
           </ListItemButton>
         </ListItem>
         <ListItem>
@@ -81,7 +84,9 @@ const Sidebar = ({ drawerOpen, toggleDrawer, drawerWidth }) => {
             <ListItemIcon>
               <ShowChartOutlinedIcon />
             </ListItemIcon>
-            <ListItemText>Analytics</ListItemText>
+            <ListItemText>
+              <Link to="/analytics">Analytics</Link>
+            </ListItemText>
           </ListItemButton>
         </ListItem>
         <ListItem>
@@ -89,7 +94,9 @@ const Sidebar = ({ drawerOpen, toggleDrawer, drawerWidth }) => {
             <ListItemIcon>
               <ReceiptLongOutlinedIcon />
             </ListItemIcon>
-            <ListItemText>Transactions</ListItemText>
+            <ListItemText>
+              <Link to="/transactions">Transactions</Link>
+            </ListItemText>
           </ListItemButton>
         </ListItem>
         <ListItem>
@@ -97,7 +104,9 @@ const Sidebar = ({ drawerOpen, toggleDrawer, drawerWidth }) => {
             <ListItemIcon>
               <CategoryOutlinedIcon />
             </ListItemIcon>
-            <ListItemText>Categories</ListItemText>
+            <ListItemText>
+              <Link to="/categories">Categories</Link>
+            </ListItemText>
           </ListItemButton>
         </ListItem>
       </List>
