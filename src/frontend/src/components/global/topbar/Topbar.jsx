@@ -35,7 +35,12 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Topbar = ({ drawerWidth, drawerOpen, toggleDrawer }) => {
+const Topbar = ({
+  drawerWidth,
+  drawerOpen,
+  toggleDrawer,
+  toggleTransactionDrawer,
+}) => {
   return (
     <AppBar position="absolute" open={drawerOpen} drawerWidth={drawerWidth}>
       <Toolbar>
@@ -58,9 +63,10 @@ const Topbar = ({ drawerWidth, drawerOpen, toggleDrawer }) => {
           <Button
             variant="contained"
             startIcon={<AddIcon />}
-            sx={{ borderRadius: "100px" }}
+            sx={{ borderRadius: "100px", backgroundColor: "#3379FF" }}
+            onClick={toggleTransactionDrawer}
           >
-            New Expense
+            New Transaction
           </Button>
           <IconButton>
             <Badge badgeContent={1} color="secondary">

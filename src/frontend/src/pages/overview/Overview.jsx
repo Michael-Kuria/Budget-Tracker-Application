@@ -1,9 +1,8 @@
 import * as React from "react";
-import { Container, Grid, Paper } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import Title from "../../components/title/Title";
 import AmountUsedCard from "../../components/cards/AmountUsedCard";
 import BalanceCard from "../../components/cards/BalanceCard";
-import PieChart from "../../components/pieChart/PieChart";
 import LineChart from "../../components/lineChart/LineChart";
 
 const Overview = () => {
@@ -15,25 +14,24 @@ const Overview = () => {
       />
 
       {/* <Box sx={{ display: "flex", flexDirection: "row" }}> */}
-      <Grid container spacing={4}>
-        <Grid item lg={4} xs={12}>
-          <AmountUsedCard amountUsed="20000" />
+      <Grid container spacing={4} mt={2}>
+        <Grid item lg={12} md={12}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <AmountUsedCard amountUsed="20000" />
+            <BalanceCard amountLeft="2020" />
+          </Box>
         </Grid>
-        <Grid item lg={4} xs={12}>
-          <BalanceCard amountLeft="20202020" />
-        </Grid>
-        <Grid item lg={4} xs={12}>
-          <BalanceCard amountLeft="2020" />
-        </Grid>
-        <Grid item lg={8} sx={{ height: "400px", width: "100%" }}>
-          <Paper sx={{ height: "400px", width: "100%" }}>
-            <LineChart />
-          </Paper>
-        </Grid>
-        <Grid item lg={4} sx={{ height: "400px", width: "100%" }}>
-          <Paper sx={{ height: "400px", width: "100%" }}>
-            <PieChart />
-          </Paper>
+        <Grid item lg={12} sx={{ height: "400px", width: "100%" }}>
+          <LineChart />
         </Grid>
       </Grid>
     </>

@@ -69,46 +69,46 @@ const Sidebar = ({ drawerOpen, toggleDrawer, drawerWidth }) => {
       </Toolbar>
       <Divider />
       <List>
-        <ListItem>
-          <ListItemButton>
-            <ListItemIcon>
-              <HomeOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText>
-              <Link to="/">Overview</Link>
-            </ListItemText>
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton>
-            <ListItemIcon>
-              <ShowChartOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText>
-              <Link to="/analytics">Analytics</Link>
-            </ListItemText>
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton>
-            <ListItemIcon>
-              <ReceiptLongOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText>
-              <Link to="/transactions">Transactions</Link>
-            </ListItemText>
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton>
-            <ListItemIcon>
-              <CategoryOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText>
-              <Link to="/categories">Categories</Link>
-            </ListItemText>
-          </ListItemButton>
-        </ListItem>
+        <Link to="/">
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <HomeOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText>Overview</ListItemText>
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link to="/analytics">
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <ShowChartOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText>Analytics</ListItemText>
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link to="/transactions">
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <ReceiptLongOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText>Transactions</ListItemText>
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link to="/categories">
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <CategoryOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText>Categories</ListItemText>
+            </ListItemButton>
+          </ListItem>
+        </Link>
       </List>
     </Drawer>
   );
