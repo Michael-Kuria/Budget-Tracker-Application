@@ -4,7 +4,6 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
-  Select,
   Textarea,
 } from "@chakra-ui/react";
 import * as Yup from "yup";

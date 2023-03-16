@@ -49,7 +49,7 @@ function App() {
           flexGrow: 1,
           height: "100vh",
           overflow: "auto",
-          background: "#fbfbfb",
+          background: "#f5f5f5",
         }}
       >
         <Toolbar />
