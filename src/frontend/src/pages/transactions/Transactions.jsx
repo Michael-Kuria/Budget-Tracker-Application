@@ -3,7 +3,7 @@ import * as React from "react";
 import Title from "../../components/title/Title";
 import TransactionsTable from "../../components/transactionsTable/TransactionsTable";
 
-const Transactions = () => {
+const Transactions = ({ transactions }) => {
   return (
     <>
       <Title
@@ -11,7 +11,8 @@ const Transactions = () => {
         subTitle="Manage  your personal finance & budget to meet your personal goal"
       />
       <Paper>
-        <TransactionsTable />
+        {console.log(transactions)}
+        <TransactionsTable transactions={transactions} />
       </Paper>
     </>
   );

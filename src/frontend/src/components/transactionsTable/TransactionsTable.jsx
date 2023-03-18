@@ -1,52 +1,36 @@
 import * as React from "react";
 import { Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { Transactions } from "../../data/Transactions";
+// import { Transactions } from "../../data/Transactions";
 
 const columns = [
-  { field: "id", headerName: "ID", flex: 0.5 },
-  { field: "registrardId", headerName: "Registrar ID" },
+  // { field: "id", headerName: "ID", flex: 0.5 },
   {
-    field: "name",
-    headerName: "Name",
+    field: "date",
+    headerName: "Date",
     flex: 1,
-    cellClassName: "name-column--cell",
+    // cellClassName: "name-column--cell",
   },
   {
-    field: "age",
-    headerName: "Age",
+    field: "category",
+    headerName: "Category",
+    renderCell: (params) => <>{params.row.category.name}</>,
+  },
+  {
+    field: "amount",
+    headerName: "Amount",
     type: "number",
     headerAlign: "left",
     align: "left",
   },
   {
-    field: "phone",
-    headerName: "Phone Number",
-    flex: 1,
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    flex: 1,
-  },
-  {
-    field: "address",
-    headerName: "Address",
-    flex: 1,
-  },
-  {
-    field: "city",
-    headerName: "City",
-    flex: 1,
-  },
-  {
-    field: "zipCode",
-    headerName: "Zip Code",
+    field: "description",
+    headerName: "Description",
     flex: 1,
   },
 ];
 
-const TransactionsTable = () => {
+const TransactionsTable = ({ transactions }) => {
   return (
     <Box
       m="40px 0 0 0"
@@ -80,7 +64,7 @@ const TransactionsTable = () => {
         },
       }}
     >
-      <DataGrid rows={Transactions} columns={columns} />
+      <DataGrid rows={transactions} columns={columns} />
     </Box>
   );
 };
