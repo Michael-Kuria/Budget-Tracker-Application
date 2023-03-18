@@ -1,11 +1,9 @@
 package com.michael.budgetTracker.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,18 +11,31 @@ import java.util.UUID;
 
 @Data
 @Entity
+@Table(name = "transactions")
 public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate creationDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modificationDate;
     private int amount;
     private String description;
-    private Month month;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+//    private Account account;
+
+    public Transaction() {
+        modificationDate = LocalDateTime.now();
+    }
+
 
 
 }
