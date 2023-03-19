@@ -20,13 +20,13 @@ public class TransactionsController {
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     public Transaction getTransactionById(@PathVariable String id){
        return service.getTransactionById(id);
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     public List<Transaction> getAllTransactions(){
         return service.getAllTransactions();
     }

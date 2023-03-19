@@ -26,8 +26,8 @@ public class Transaction {
     private int amount;
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
+    @ManyToOne()
+    @JoinColumn(name="category_id")
     private Category category;
 
 //    private Account account;

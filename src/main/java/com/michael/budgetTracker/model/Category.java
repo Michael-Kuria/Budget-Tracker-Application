@@ -3,12 +3,14 @@ package com.michael.budgetTracker.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Entity
 @Data
 @Table(name="categories")
+@NoArgsConstructor
 public class Category{
 
     @Id
