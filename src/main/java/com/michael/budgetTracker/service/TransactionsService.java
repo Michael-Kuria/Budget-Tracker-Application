@@ -1,7 +1,7 @@
 package com.michael.budgetTracker.service;
 
 import com.michael.budgetTracker.model.Transaction;
-import com.michael.budgetTracker.repository.TransactionRepository;
+import com.michael.budgetTracker.repository.TransactionRepository;;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,4 +34,5 @@ public class TransactionsService {
     public List<Transaction> getAllTransactions() {
         return repository.findAll();
     }
+
 }

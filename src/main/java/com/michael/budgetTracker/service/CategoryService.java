@@ -1,6 +1,7 @@
 package com.michael.budgetTracker.service;
 
 import com.michael.budgetTracker.model.Category;
+import com.michael.budgetTracker.model.CategoryAndSum;
 import com.michael.budgetTracker.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +33,8 @@ public class CategoryService {
 
     public List<Category> getAllCategories() {
         return repository.findAll();
+    }
+    public List<CategoryAndSum> getCategoriesAndSum(){
+        return repository.findCategoriesAndSum();
     }
 }

@@ -15,6 +15,14 @@ const checkStatus = (response) => {
   return Promise.reject(error);
 };
 
-export default function getAllTransactions() {
+export function getAllTransactions() {
   return fetch("/api/transaction").then(checkStatus);
+}
+
+export function getCategoriesAndSum() {
+  return fetch("api/category/categories-and-sum").then(checkStatus);
+}
+
+export function getBudget(id) {
+  return fetch("api/budget/" + id).then(checkStatus);
 }

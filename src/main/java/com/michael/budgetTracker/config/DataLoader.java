@@ -6,7 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 /**
- * Using this to initialize the categories table instead of using a schema
+ * Using this to initialize the categories table instead of using a schema, with the @component commented out this will not run
  */
 //@Component
 public class DataLoader implements CommandLineRunner {

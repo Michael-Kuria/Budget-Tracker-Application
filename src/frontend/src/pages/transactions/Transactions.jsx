@@ -10,10 +10,8 @@ const Transactions = ({ transactions }) => {
         title="Transactions"
         subTitle="Manage  your personal finance & budget to meet your personal goal"
       />
-      <Paper>
-        {console.log(transactions)}
-        <TransactionsTable transactions={transactions} />
-      </Paper>
+
+      <TransactionsTable transactions={transactions} height="75vh" />
     </>
   );
 };

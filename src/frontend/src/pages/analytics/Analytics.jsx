@@ -4,7 +4,7 @@ import Title from "../../components/title/Title";
 import LineChart from "../../components/lineChart/LineChart";
 import PieChart from "../../components/pieChart/PieChart";
 
-const Analytics = () => {
+const Analytics = ({ categoriesAndSum }) => {
   return (
     <>
       <Title
@@ -20,10 +20,27 @@ const Analytics = () => {
         }}
       >
         <Box sx={{ height: "30rem" }}>
-          <LineChart />
+          <LineChart
+            data={[
+              {
+                id: "norway",
+                color: "hsl(104, 70%, 50%)",
+                data: categoriesAndSum.map((item) => ({
+                  x: item.name,
+                  y: item.amount,
+                })),
+              },
+            ]}
+          />
         </Box>
-        <Paper sx={{ height: "20rem" }}>
-          <PieChart />
+        <Paper sx={{ height: "30rem" }}>
+          <PieChart
+            data={categoriesAndSum.map((item) => ({
+              id: item.name,
+              label: item.name,
+              value: item.amount,
+            }))}
+          />
         </Paper>
       </Box>
     </>

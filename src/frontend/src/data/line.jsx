@@ -1,55 +1,55 @@
 const data = [
   {
-    id: "japan",
-    color: "hsl(17, 70%, 50%)",
+    id: "norway",
+    color: "hsl(104, 70%, 50%)",
     data: [
       {
         x: "plane",
-        y: 291,
+        y: 169,
       },
       {
         x: "helicopter",
-        y: 205,
+        y: 222,
       },
       {
         x: "boat",
-        y: 186,
+        y: 203,
       },
       {
         x: "train",
-        y: 71,
+        y: 12,
       },
       {
         x: "subway",
-        y: 189,
+        y: 242,
       },
       {
         x: "bus",
-        y: 248,
+        y: 135,
       },
       {
         x: "car",
-        y: 201,
-      },
-      {
-        x: "moto",
         y: 106,
       },
       {
+        x: "moto",
+        y: 258,
+      },
+      {
         x: "bicycle",
-        y: 104,
+        y: 132,
       },
       {
         x: "horse",
-        y: 261,
+        y: 144,
       },
       {
         x: "skateboard",
-        y: 183,
+        y: 159,
       },
       {
         x: "others",
-        y: 222,
+        y: 61,
       },
     ],
   },

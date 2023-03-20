@@ -4,14 +4,19 @@ import Title from "../../components/title/Title";
 import AmountUsedCard from "../../components/cards/AmountUsedCard";
 import BalanceCard from "../../components/cards/BalanceCard";
 import LineChart from "../../components/lineChart/LineChart";
+import TransactionsTable from "../../components/transactionsTable/TransactionsTable";
 
-const Overview = () => {
+const Overview = ({ categoriesAndSum, transactions, budget }) => {
+  const expensesTotal = categoriesAndSum
+    .map((item) => item.amount)
+    .reduce((a, b) => a + b);
   return (
-    <>
+    <Box paddingBottom="5rem">
       <Title
         title="Overview"
         subTitle="Manage  your personal finance & budget to meet your personal goal"
       />
+      {console.log(budget.budget)}
 
       {/* <Box sx={{ display: "flex", flexDirection: "row" }}> */}
       <Grid container spacing={4} mt={2}>
@@ -26,15 +31,29 @@ const Overview = () => {
               height: "100%",
             }}
           >
-            <AmountUsedCard amountUsed="20000" />
-            <BalanceCard amountLeft="2020" />
+            <BalanceCard amountLeft={budget.budget - expensesTotal} />
+            <AmountUsedCard amountUsed={expensesTotal} />
           </Box>
         </Grid>
-        <Grid item lg={12} sx={{ height: "400px", width: "100%" }}>
-          <LineChart />
+        <Grid item lg={12} sx={{ height: "30rem", width: "100%" }}>
+          <LineChart
+            data={[
+              {
+                id: "norway",
+                color: "hsl(104, 70%, 50%)",
+                data: categoriesAndSum.map((item) => ({
+                  x: item.name,
+                  y: item.amount,
+                })),
+              },
+            ]}
+          />
+        </Grid>
+        <Grid item lg={12} sx={{ height: "25rem", width: "100%" }}>
+          <TransactionsTable transactions={transactions} height="100%" />
         </Grid>
       </Grid>
-    </>
+    </Box>
   );
 };
 

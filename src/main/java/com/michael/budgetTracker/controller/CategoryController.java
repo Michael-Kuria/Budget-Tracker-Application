@@ -1,6 +1,7 @@
 package com.michael.budgetTracker.controller;
 
 import com.michael.budgetTracker.model.Category;
+import com.michael.budgetTracker.model.CategoryAndSum;
 import com.michael.budgetTracker.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,11 @@ public class CategoryController {
     @ResponseStatus(HttpStatus.CREATED)
     public void saveCategory(@RequestBody Category category){
         service.saveCategory(category);
+    }
+
+    @GetMapping("/categories-and-sum")
+    public List<CategoryAndSum> findCategoriesAndSum(){
+        return service.getCategoriesAndSum();
     }
 
 

@@ -10,6 +10,9 @@ insert into categories (id, name, amount, description) values (7,'Household_Supp
 insert into categories (id, name, amount, description) values (8, 'Personal', 10000, 'Your housing usage');
 insert into categories (id, name, amount, description) values (9,'Debt', 10000, 'Your housing usage');
 
+insert into budget (start_date, end_date, budget, financial_goals) values ('2023-01-01', '2022-01-31', 62667, 'China');
+insert into budget (start_date, end_date, budget, financial_goals) values ('2023-02-01', '2022-2-28', 63848, 'China');
+insert into budget (start_date, end_date, budget, financial_goals) values ('2023-03-01', '2023-03-31', 1000570, 'United States');
 
 
 insert into transactions (id, date, amount, description, category_id) values ('681783c8-d59a-44ae-baa8-96e52a7c5375', '2022-12-05', 805, 'aa33:744a:e180:c5b4:d4ce:e2d8:e1:ebfb', 9);

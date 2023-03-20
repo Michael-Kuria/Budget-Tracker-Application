@@ -1,13 +1,13 @@
 import { Paper } from "@mui/material";
 import { ResponsiveLine } from "@nivo/line";
-import data from "../../data/line";
+// import data from "../../data/line";
 
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-const LineChart = () => (
+const LineChart = ({ data }) => (
   <Paper
     sx={{
       display: "flex",
@@ -23,45 +23,47 @@ const LineChart = () => (
     <ResponsiveLine
       theme={{
         fontFamily: "inherit",
-        fontSize: "1rem",
-        // axis: {
-        //   domain: {
-        //     line: {
-        //       stroke: "#3379FF",
-        //     },
-        //   },
-        //   legend: {
-        //     text: {
-        //       fill: "#3379FF",
-        //     },
-        //   },
-        //   ticks: {
-        //     line: {
-        //       stroke: colors.grey[100],
-        //       strokeWidth: 1,
-        //     },
-        //     text: {
-        //       fill: colors.grey[100],
-        //     },
-        //   },
-        // },
-        // legends: {
-        //   text: {
-        //     fill: colors.grey[100],
-        //   },
-        // },
-        // tooltip: {
-        //   container: {
-        //     color: colors.primary[500],
-        //   },
-        // },
+        textColor: "#1a1a1a",
+        fontSize: ".8rem",
+        axis: {
+          domain: {
+            line: {
+              stroke: "#1a1a1a",
+              strokeWidth: 2,
+            },
+          },
+          legend: {
+            text: {
+              fontSize: ".9rem",
+              textTransform: "Capitalize",
+              fill: "#1a1a1a",
+            },
+          },
+          ticks: {
+            line: {
+              stroke: "#1a1a1a",
+              strokeWidth: 1,
+            },
+            text: {
+              fontSize: ".8rem",
+              fill: "#333333",
+              textTransform: "capitalize",
+            },
+          },
+        },
+        grid: {
+          line: {
+            stroke: "#dddddd",
+            strokeWidth: 1,
+          },
+        },
       }}
       data={data}
-      margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+      margin={{ top: 10, right: 50, bottom: 80, left: 100 }}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
-        min: "auto",
+        min: "0",
         max: "auto",
         stacked: true,
         reverse: false,
@@ -74,8 +76,8 @@ const LineChart = () => (
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: "transportation",
-        legendOffset: 36,
+        legend: "Category",
+        legendOffset: 50,
         legendPosition: "middle",
       }}
       axisLeft={{
@@ -83,43 +85,19 @@ const LineChart = () => (
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: "count",
-        legendOffset: -40,
+        legend: "Amount",
+        legendOffset: -80,
         legendPosition: "middle",
       }}
+      colors={{ scheme: "accent" }}
+      lineWidth={3}
       pointSize={10}
       pointColor={{ theme: "background" }}
       pointBorderWidth={2}
       pointBorderColor={{ from: "serieColor" }}
       pointLabelYOffset={-12}
       useMesh={true}
-      fontFamily="Roboto"
-      legends={[
-        {
-          anchor: "bottom-right",
-          direction: "column",
-          justify: false,
-          translateX: 100,
-          translateY: 0,
-          itemsSpacing: 0,
-          itemDirection: "left-to-right",
-          itemWidth: 80,
-          itemHeight: 20,
-          itemOpacity: 0.75,
-          symbolSize: 12,
-          symbolShape: "circle",
-          symbolBorderColor: "rgba(0, 0, 0, .5)",
-          effects: [
-            {
-              on: "hover",
-              style: {
-                itemBackground: "rgba(0, 0, 0, .03)",
-                itemOpacity: 1,
-              },
-            },
-          ],
-        },
-      ]}
+      legends={[]}
     />
   </Paper>
 );
