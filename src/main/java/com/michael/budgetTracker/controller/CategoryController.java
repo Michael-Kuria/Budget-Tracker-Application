@@ -27,7 +27,7 @@ public class CategoryController {
 
 
     @GetMapping
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     public List<Category> getAllCategories(){
         return service.getAllCategories();
     }

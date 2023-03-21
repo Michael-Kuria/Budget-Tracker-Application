@@ -79,7 +79,7 @@ const TransactionsTable = ({ transactions, height }) => {
           // color: colors.greenAccent[300],
         },
         "& .MuiDataGrid-columnHeaders": {
-          backgroundColor: "#3379FF",
+          backgroundColor: "#007bff", //3379FF
           borderBottom: "none",
           fontSize: "1.1rem",
         },
@@ -88,7 +88,7 @@ const TransactionsTable = ({ transactions, height }) => {
         },
         "& .MuiDataGrid-footerContainer": {
           borderTop: "none",
-          backgroundColor: "#3379FF",
+          backgroundColor: "#007bff",
         },
         "& .MuiCheckbox-root": {
           // color: `${colors.greenAccent[200]} !important`,

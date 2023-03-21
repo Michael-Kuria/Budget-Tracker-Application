@@ -32,7 +32,7 @@ public class TransactionsService {
     }
 
     public List<Transaction> getAllTransactions() {
-        return repository.findAll();
+        return repository.findAllByOrderByDateDesc();
     }
 
 }

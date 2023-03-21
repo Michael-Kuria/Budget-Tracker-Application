@@ -41,6 +41,7 @@ public class TransactionsController {
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateTransaction(@Valid @RequestBody Transaction transaction){
+        System.out.println(transaction);
         service.saveTransaction(transaction);
     }
 

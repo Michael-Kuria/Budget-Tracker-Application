@@ -1,6 +1,8 @@
 package com.michael.budgetTracker.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,8 +28,8 @@ public class Transaction {
     private int amount;
     private String description;
 
-    @ManyToOne()
-    @JoinColumn(name="category_id")
+    @ManyToOne
+    @JoinColumn(name="category_id", referencedColumnName = "id", nullable = false, updatable = false)
     private Category category;
 
 //    private Account account;
@@ -35,7 +37,5 @@ public class Transaction {
     public Transaction() {
         modificationDate = LocalDateTime.now();
     }
-
-
 
 }

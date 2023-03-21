@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormControl,
   FormErrorMessage,
@@ -10,58 +10,104 @@ import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import MuiDrawer from "@mui/material/Drawer";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, CssBaseline, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useFormik } from "formik";
 import "./transactionDrawer.css";
+import { getCategories, postTransaction } from "../../../client/Client";
 
 const Drawer = styled(MuiDrawer)(({ theme }) => ({
   zIndex: theme.zIndex.appBar + 1000,
 }));
 
-const categories = [
-  {
-    name: "housing",
-    subCategory: ["rent", "householdRepairs"],
-  },
-  {
-    name: "transportation",
-    subCategory: ["carPayment", "gas", "public"],
-  },
-  {
-    name: "food",
-    subCategory: ["carPayment", "gas", "public"],
-  },
+// const categories = [
+//   {
+//     name: "housing",
+//     subCategory: ["rent", "householdRepairs"],
+//   },
+//   {
+//     name: "transportation",
+//     subCategory: ["carPayment", "gas", "public"],
+//   },
+//   {
+//     name: "food",
+//     subCategory: ["carPayment", "gas", "public"],
+//   },
 
-  {
-    name: "utilities",
-    subCategory: ["carPayment", "gas", "public"],
-  },
-  {
-    name: "clothing",
-    subCategory: ["carPayment", "gas", "public"],
-  },
-  {
-    name: "Medical",
-    subCategory: ["carPayment", "gas", "public"],
-  },
-];
+//   {
+//     name: "utilities",
+//     subCategory: ["carPayment", "gas", "public"],
+//   },
+//   {
+//     name: "clothing",
+//     subCategory: ["carPayment", "gas", "public"],
+//   },
+//   {
+//     name: "Medical",
+//     subCategory: ["carPayment", "gas", "public"],
+//   },
+// ];
 
 const TransactionDrawer = ({ isOpen, toggleTransactionDrawer }) => {
   const [date, setDate] = useState(new Date());
+  const [categories, setCategories] = useState([]);
+
+  const fetchCategories = () => {
+    getCategories()
+      .then((res) => res.json())
+      .then((data) => {
+        setCategories(data);
+        console.log("HERE " + JSON.stringify(categories));
+      })
+      .catch((error) => {
+        console.log(error.message);
+        error.response.json().then((res) => {
+          console.log(res);
+        });
+      });
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const addTransaction = (transaction) => {
+    postTransaction(transaction)
+      .then(() => {
+        console.log("Transaction added successfully");
+      })
+      .catch((error) => {
+        error.response.json().then((res) => {
+          console.log(res);
+        });
+      });
+  };
+
+  const handleSubmitForm = (transaction) => {
+    // console.log({
+    //   ...transaction,
+    //   category: categories[parseInt(transaction.category) - 1],
+    // });
+    addTransaction({
+      ...transaction,
+      category: categories[parseInt(transaction.category) - 1],
+    });
+    formik.handleReset();
+  };
+
   const formik = useFormik({
     initialValues: {
       date: date,
-      category: "housing",
+      category: "1",
       amount: 0,
-      action: "",
+      description: "",
     },
-    onSubmit: (values) => console.log(values),
+    onSubmit: (values) => handleSubmitForm(values),
     validationSchema: Yup.object({
       date: Yup.date().required("required"),
       category: Yup.string().required("required"),
-      amount: Yup.number().required("required"),
-      action: Yup.string(),
+      amount: Yup.number().min(0).required("required"),
+      description: Yup.string(),
     }),
   });
 
@@ -72,6 +118,7 @@ const TransactionDrawer = ({ isOpen, toggleTransactionDrawer }) => {
       open={isOpen}
       onClose={toggleTransactionDrawer}
     >
+      <CssBaseline />
       <Box
         sx={{
           width: "450px",
@@ -91,6 +138,7 @@ const TransactionDrawer = ({ isOpen, toggleTransactionDrawer }) => {
               id="date"
               className="date-picker"
               selected={date}
+              dateFormat="yyyy-MM-dd"
               {...formik.getFieldProps("date")}
               onChange={(dt) => setDate(dt)}
             />
@@ -103,7 +151,7 @@ const TransactionDrawer = ({ isOpen, toggleTransactionDrawer }) => {
             <select id="category" {...formik.getFieldProps("category")}>
               {categories.map((category, index) => {
                 return (
-                  <option key={index} value={category.name}>
+                  <option key={index} value={index}>
                     {category.name}
                   </option>
                 );
@@ -111,6 +159,7 @@ const TransactionDrawer = ({ isOpen, toggleTransactionDrawer }) => {
             </select>
             <FormErrorMessage>{formik.errors.category}</FormErrorMessage>
           </FormControl>
+
           <FormControl
             isInvalid={formik.touched.amount && formik.errors.amount}
           >
@@ -122,14 +171,30 @@ const TransactionDrawer = ({ isOpen, toggleTransactionDrawer }) => {
             />
             <FormErrorMessage>{formik.errors.amount}</FormErrorMessage>
           </FormControl>
+
           <FormControl
-            isInvalid={formik.touched.action && formik.errors.action}
+            isInvalid={formik.touched.description && formik.errors.description}
           >
-            <FormLabel htmlFor="action">Action</FormLabel>
-            <Textarea id="action" {...formik.getFieldProps("action")} />
-            <FormErrorMessage>{formik.errors.action}</FormErrorMessage>
+            <FormLabel htmlFor="description">Description</FormLabel>
+            <Textarea
+              id="description"
+              {...formik.getFieldProps("description")}
+            />
+            <FormErrorMessage>{formik.errors.description}</FormErrorMessage>
           </FormControl>
-          <Button type="submit">Submit</Button>
+          <Button
+            type="submit"
+            sx={{
+              borderRadius: "100px",
+              backgroundColor: "#007bff",
+              color: "#fff",
+              ":hover": {
+                backgroundColor: "#1a88ff",
+              },
+            }}
+          >
+            Submit
+          </Button>
         </form>
       </Box>
     </Drawer>

@@ -1,6 +1,8 @@
 package com.michael.budgetTracker.model;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,4 +29,15 @@ public class Category{
         this.amount = amount;
         this.description = description;
     }
+
+//    @JsonCreator
+//    public Category(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("amount") int amount, @JsonProperty("description") String description){
+//        this.id = id;
+//        this.name = name;
+//        this.amount = amount;
+//        this.description = description;
+//
+//    }
+
+
 }

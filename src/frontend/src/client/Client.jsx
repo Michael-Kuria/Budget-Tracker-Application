@@ -23,6 +23,20 @@ export function getCategoriesAndSum() {
   return fetch("api/category/categories-and-sum").then(checkStatus);
 }
 
+export function getCategories() {
+  return fetch("api/category").then(checkStatus);
+}
+
 export function getBudget(id) {
   return fetch("api/budget/" + id).then(checkStatus);
+}
+
+export function postTransaction(transaction) {
+  return fetch("api/transaction", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify(transaction),
+  }).then(checkStatus);
 }

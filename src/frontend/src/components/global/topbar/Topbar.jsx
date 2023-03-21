@@ -63,7 +63,7 @@ const Topbar = ({
           <Button
             variant="contained"
             startIcon={<AddIcon />}
-            sx={{ borderRadius: "100px", backgroundColor: "#3379FF" }}
+            sx={{ borderRadius: "100px", backgroundColor: "#007bff" }}
             onClick={toggleTransactionDrawer}
           >
             New Transaction
