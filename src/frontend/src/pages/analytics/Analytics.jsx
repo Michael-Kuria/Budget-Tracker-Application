@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Paper } from "@mui/material";
+import { Box } from "@mui/material";
 import Title from "../../components/title/Title";
 import LineChart from "../../components/lineChart/LineChart";
 import PieChart from "../../components/pieChart/PieChart";
@@ -33,7 +33,7 @@ const Analytics = ({ categoriesAndSum }) => {
             ]}
           />
         </Box>
-        <Paper sx={{ height: "30rem" }}>
+        <Box sx={{ height: "30rem" }}>
           <PieChart
             data={categoriesAndSum.map((item) => ({
               id: item.name,
@@ -41,7 +41,7 @@ const Analytics = ({ categoriesAndSum }) => {
               value: item.amount,
             }))}
           />
-        </Paper>
+        </Box>
       </Box>
     </>
   );

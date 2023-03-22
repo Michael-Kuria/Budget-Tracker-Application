@@ -6,19 +6,19 @@ import BalanceCard from "../../components/cards/BalanceCard";
 import LineChart from "../../components/lineChart/LineChart";
 import TransactionsTable from "../../components/transactionsTable/TransactionsTable";
 
-const Overview = ({ categoriesAndSum, transactions, budget }) => {
-  const expensesTotal = categoriesAndSum
-    .map((item) => item.amount)
-    .reduce((a, b) => a + b);
+const Overview = ({
+  categoriesAndSum,
+  transactions,
+  balance,
+  totalExpenses,
+}) => {
   return (
     <Box paddingBottom="5rem">
       <Title
         title="Overview"
         subTitle="Manage  your personal finance & budget to meet your personal goal"
       />
-      {console.log(budget.budget)}
 
-      {/* <Box sx={{ display: "flex", flexDirection: "row" }}> */}
       <Grid container spacing={4} mt={2}>
         <Grid item lg={12} md={12}>
           <Box
@@ -31,15 +31,15 @@ const Overview = ({ categoriesAndSum, transactions, budget }) => {
               height: "100%",
             }}
           >
-            <BalanceCard amountLeft={budget.budget - expensesTotal} />
-            <AmountUsedCard amountUsed={expensesTotal} />
+            <BalanceCard balance={balance} />
+            <AmountUsedCard totalExpenses={totalExpenses} />
           </Box>
         </Grid>
         <Grid item lg={12} sx={{ height: "30rem", width: "100%" }}>
           <LineChart
             data={[
               {
-                id: "norway",
+                id: "categoriesAndSum",
                 color: "hsl(104, 70%, 50%)",
                 data: categoriesAndSum.map((item) => ({
                   x: item.name,

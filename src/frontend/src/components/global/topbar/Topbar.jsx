@@ -16,8 +16,8 @@ import {
 import image from "../../../assets/michael.JPG";
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open" && prop !== "drawerWidth",
-})(({ theme, open, drawerWidth }) => ({
+  shouldForwardProp: (prop) => prop !== "open" && prop !== "sidebarWidth",
+})(({ theme, open, sidebarWidth }) => ({
   backgroundColor: "#fff",
   color: "rgba(0, 0, 0, 0.87)",
   zIndex: theme.zIndex.drawer + 1,
@@ -26,8 +26,8 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: sidebarWidth,
+    width: `calc(100% - ${sidebarWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -36,21 +36,25 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Topbar = ({
-  drawerWidth,
-  drawerOpen,
-  toggleDrawer,
+  isSidebarDrawerOpen,
+  toggleSidebarDrawer,
   toggleTransactionDrawer,
+  sidebarWidth,
 }) => {
   return (
-    <AppBar position="absolute" open={drawerOpen} drawerWidth={drawerWidth}>
+    <AppBar
+      position="absolute"
+      open={isSidebarDrawerOpen}
+      sidebarWidth={sidebarWidth}
+    >
       <Toolbar>
         <IconButton
           color="inherit"
           aria-label="open drawer"
-          onClick={toggleDrawer}
+          onClick={toggleSidebarDrawer}
           sx={{
             marginRight: "36px",
-            ...(drawerOpen && { display: "none" }),
+            ...(isSidebarDrawerOpen && { display: "none" }),
           }}
         >
           <MenuIcon />

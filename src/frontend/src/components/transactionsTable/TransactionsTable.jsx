@@ -99,7 +99,11 @@ const TransactionsTable = ({ transactions, height }) => {
       }}
     >
       <Paper>
-        <DataGrid rows={transactions} columns={columns} />
+        <DataGrid
+          rows={transactions}
+          columns={columns}
+          getRowId={(row) => row.id}
+        />
       </Paper>
     </Box>
   );

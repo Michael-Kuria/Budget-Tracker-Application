@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   FormControl,
   FormErrorMessage,
@@ -14,67 +14,27 @@ import { Box, Button, CssBaseline, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useFormik } from "formik";
 import "./transactionDrawer.css";
-import { getCategories, postTransaction } from "../../../client/Client";
+import { postTransaction } from "../../../client/Client";
 
 const Drawer = styled(MuiDrawer)(({ theme }) => ({
   zIndex: theme.zIndex.appBar + 1000,
 }));
 
-// const categories = [
-//   {
-//     name: "housing",
-//     subCategory: ["rent", "householdRepairs"],
-//   },
-//   {
-//     name: "transportation",
-//     subCategory: ["carPayment", "gas", "public"],
-//   },
-//   {
-//     name: "food",
-//     subCategory: ["carPayment", "gas", "public"],
-//   },
-
-//   {
-//     name: "utilities",
-//     subCategory: ["carPayment", "gas", "public"],
-//   },
-//   {
-//     name: "clothing",
-//     subCategory: ["carPayment", "gas", "public"],
-//   },
-//   {
-//     name: "Medical",
-//     subCategory: ["carPayment", "gas", "public"],
-//   },
-// ];
-
-const TransactionDrawer = ({ isOpen, toggleTransactionDrawer }) => {
+const TransactionDrawer = ({
+  categories,
+  fetchAllTransactions,
+  isTransactionDrawerOpen,
+  toggleTransactionDrawer,
+  fetchCategoriesAndSum,
+}) => {
   const [date, setDate] = useState(new Date());
-  const [categories, setCategories] = useState([]);
-
-  const fetchCategories = () => {
-    getCategories()
-      .then((res) => res.json())
-      .then((data) => {
-        setCategories(data);
-        console.log("HERE " + JSON.stringify(categories));
-      })
-      .catch((error) => {
-        console.log(error.message);
-        error.response.json().then((res) => {
-          console.log(res);
-        });
-      });
-  };
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
   const addTransaction = (transaction) => {
     postTransaction(transaction)
       .then(() => {
         console.log("Transaction added successfully");
+        fetchAllTransactions();
+        fetchCategoriesAndSum();
       })
       .catch((error) => {
         error.response.json().then((res) => {
@@ -84,13 +44,9 @@ const TransactionDrawer = ({ isOpen, toggleTransactionDrawer }) => {
   };
 
   const handleSubmitForm = (transaction) => {
-    // console.log({
-    //   ...transaction,
-    //   category: categories[parseInt(transaction.category) - 1],
-    // });
     addTransaction({
       ...transaction,
-      category: categories[parseInt(transaction.category) - 1],
+      category: categories[parseInt(transaction.category)],
     });
     formik.handleReset();
   };
@@ -115,7 +71,7 @@ const TransactionDrawer = ({ isOpen, toggleTransactionDrawer }) => {
     <Drawer
       variant="temporary"
       anchor="right"
-      open={isOpen}
+      open={isTransactionDrawerOpen}
       onClose={toggleTransactionDrawer}
     >
       <CssBaseline />

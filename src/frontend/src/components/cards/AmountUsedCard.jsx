@@ -16,7 +16,7 @@ const BorderLinearProgress = styled(LinearProgress)(() => ({
   },
 }));
 
-const AmountUsedCard = ({ amountUsed }) => {
+const AmountUsedCard = ({ totalExpenses }) => {
   return (
     <Paper
       sx={{
@@ -37,10 +37,10 @@ const AmountUsedCard = ({ amountUsed }) => {
         Your are on Track
       </Typography>
       <Typography component="h6" variant="h5">
-        ${amountUsed}
+        ${totalExpenses}
       </Typography>
       <Typography component="p" variant="body2">
-        Left to spend
+        spent already
       </Typography>
       <BorderLinearProgress variant="determinate" value={80} />
     </Paper>

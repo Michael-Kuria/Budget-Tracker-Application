@@ -19,8 +19,8 @@ import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import { Link } from "react-router-dom";
 
 const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open" && prop !== "drawerWidth",
-})(({ theme, open, drawerWidth }) => ({
+  shouldForwardProp: (prop) => prop !== "open" && prop !== "sidebarWidth",
+})(({ theme, open, sidebarWidth }) => ({
   "& .MuiDrawer-paper": {
     "& .MuiListItemButton-root:hover": {
       backgroundColor: "#b9d1ec",
@@ -32,7 +32,7 @@ const Drawer = styled(MuiDrawer, {
     },
     position: "relative",
     whiteSpace: "nowrap",
-    width: drawerWidth,
+    width: sidebarWidth,
     height: "100vh",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -53,9 +53,17 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-const Sidebar = ({ drawerOpen, toggleDrawer, drawerWidth }) => {
+const Sidebar = ({
+  isSidebarDrawerOpen,
+  toggleSidebarDrawer,
+  sidebarWidth,
+}) => {
   return (
-    <Drawer variant="permanent" open={drawerOpen} drawerWidth={drawerWidth}>
+    <Drawer
+      variant="permanent"
+      open={isSidebarDrawerOpen}
+      sidebarWidth={sidebarWidth}
+    >
       <Toolbar
         sx={{
           display: "flex",
@@ -63,7 +71,7 @@ const Sidebar = ({ drawerOpen, toggleDrawer, drawerWidth }) => {
           justifyContent: "flex-end",
         }}
       >
-        <IconButton onClick={toggleDrawer}>
+        <IconButton onClick={toggleSidebarDrawer}>
           <ChevronLeftIcon />
         </IconButton>
       </Toolbar>

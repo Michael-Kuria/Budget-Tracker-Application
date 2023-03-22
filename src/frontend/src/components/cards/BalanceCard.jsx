@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Typography, Paper } from "@mui/material";
 
-const BalanceCard = ({ amountLeft }) => {
+const BalanceCard = ({ balance }) => {
   return (
     <Paper
       sx={{
@@ -21,7 +21,7 @@ const BalanceCard = ({ amountLeft }) => {
         Your total balance
       </Typography>
       <Typography component="h6" variant="h4">
-        ${amountLeft}
+        ${balance}
       </Typography>
     </Paper>
   );
