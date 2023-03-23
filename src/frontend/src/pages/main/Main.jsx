@@ -15,7 +15,7 @@ import SideBarRoutes from "../../components/routes/SideBarRoutes";
 const Main = () => {
   const [isSidebarDrawerOpen, setIsSidebarDrawerOpen] = useState(true);
   const [isTransactionDrawerOpen, setIsTransactionDrawerOpen] = useState(false);
-  const [categoriesAndSum, setCategoriesAndSum] = useState([{ housing: 100 }]);
+  const [categoriesAndSum, setCategoriesAndSum] = useState([]);
   const [budget, setBudget] = useState({});
   const [transactions, setTransactions] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -36,16 +36,6 @@ const Main = () => {
 
   const toggleTransactionDrawer = () => {
     setIsTransactionDrawerOpen(!isTransactionDrawerOpen);
-  };
-
-  /**
-   * update the balance and total expense states
-   */
-  const updateBalanceAndExpenses = () => {
-    setTotalExpenses(
-      categoriesAndSum.map((item) => item.amount).reduce((a, b) => a + b)
-    );
-    setBalance(budget.budget - totalExpenses);
   };
 
   /**
@@ -140,12 +130,22 @@ const Main = () => {
     fetchCategories();
   }, []);
 
+  /**
+   * update the total expense states, when categoriesAndSum state changes
+   */
+
   useEffect(() => {
     setTotalExpenses(
-      categoriesAndSum.map((item) => item.amount).reduce((a, b) => a + b)
+      categoriesAndSum.length === 0
+        ? 0
+        : categoriesAndSum.map((item) => item.amount).reduce((a, b) => a + b)
     );
     console.log("Now you see me in Total Expenses. HAHAHA");
   }, [categoriesAndSum]);
+
+  /**
+   * update the balance when budget or expense total state changes
+   */
 
   useEffect(() => {
     setBalance(budget.budget - totalExpenses);
@@ -171,7 +171,6 @@ const Main = () => {
         isTransactionDrawerOpen={isTransactionDrawerOpen}
         toggleTransactionDrawer={toggleTransactionDrawer}
         fetchCategoriesAndSum={fetchCategoriesAndSum}
-        updateBalanceAndExpenses={updateBalanceAndExpenses}
       />
       <Box
         sx={{

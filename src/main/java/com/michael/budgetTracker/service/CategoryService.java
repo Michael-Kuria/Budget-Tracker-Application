@@ -37,4 +37,8 @@ public class CategoryService {
     public List<CategoryAndSum> getCategoriesAndSum(){
         return repository.findCategoriesAndSum();
     }
+
+    public long categoryCount() {
+        return repository.count();
+    }
 }

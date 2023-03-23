@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/budget")
@@ -21,6 +22,12 @@ public class BudgetController {
     @ResponseStatus(HttpStatus.OK)
     public Budget getBudgetById(@PathVariable LocalDate id){
         return service.getBudgetById(id);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Budget> getBudgetById(){
+        return service.getAllBudgets();
     }
 
     @PostMapping
