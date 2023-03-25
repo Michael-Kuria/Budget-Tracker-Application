@@ -37,5 +37,4 @@ build/
 /src/frontend/node_modules
 /src/frontend/.pnp
 /src/frontend/build
-
 /src/frontend/node/
