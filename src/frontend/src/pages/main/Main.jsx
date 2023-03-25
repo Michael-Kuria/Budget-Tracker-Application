@@ -21,8 +21,15 @@ const Main = () => {
   const [categories, setCategories] = useState([]);
   const [balance, setBalance] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
+  const [transactionToEdit, setTransactionToEdit] = useState({
+    date: new Date(),
+    category: { name: "Housing" },
+    amount: 0,
+    description: "",
+  });
 
   const sidebarWidth = 240;
+
   /**
    * A function for expanding and collapsing the sidebar
    */
@@ -46,7 +53,6 @@ const Main = () => {
       .then((res) => res.json())
       .then((data) => {
         setTransactions(data);
-        console.log(data);
       })
       .catch((error) => {
         console.log(error.message);
@@ -88,9 +94,9 @@ const Main = () => {
     const date = new Date();
     console.log(date);
 
-    console.log(date.getFullYear() + "-" + "03" + "-01");
+    console.log(date.getFullYear() + "-03-01");
 
-    getBudget(date.getFullYear() + "-" + "03" + "-01")
+    getBudget(date.getFullYear() + "-03-01")
       .then((res) => res.json())
       .then((data) => {
         setBudget(data);
@@ -152,6 +158,10 @@ const Main = () => {
     console.log("Now you see me in balance. HAHAHA");
   }, [budget, totalExpenses]);
 
+  useEffect(() => {
+    // if (transactions.length > 0) setTransactionToEdit(transactions[0]);
+  }, [transactions]);
+
   return (
     <Box component="main" sx={{ position: "relative", display: "flex" }}>
       <Topbar
@@ -171,6 +181,8 @@ const Main = () => {
         isTransactionDrawerOpen={isTransactionDrawerOpen}
         toggleTransactionDrawer={toggleTransactionDrawer}
         fetchCategoriesAndSum={fetchCategoriesAndSum}
+        transactionToEdit={transactionToEdit}
+        setTransactionToEdit={setTransactionToEdit}
       />
       <Box
         sx={{
@@ -186,6 +198,10 @@ const Main = () => {
           budget={budget}
           totalExpenses={totalExpenses}
           balance={balance}
+          setTransactionToEdit={setTransactionToEdit}
+          toggleTransactionDrawer={toggleTransactionDrawer}
+          fetchAllTransactions={fetchAllTransactions}
+          fetchCategoriesAndSum={fetchCategoriesAndSum}
         />
       </Box>
     </Box>

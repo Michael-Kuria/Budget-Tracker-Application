@@ -35,4 +35,8 @@ public class TransactionsService {
         return repository.findAllByOrderByDateDesc();
     }
 
+    public void deleteTransactionById(UUID id){
+        repository.deleteById(id);
+    }
+
 }

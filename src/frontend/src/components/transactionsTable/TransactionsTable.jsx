@@ -1,61 +1,140 @@
 import * as React from "react";
-import { Box, Paper } from "@mui/material";
+import { Box, IconButton, Paper } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import { deleteTransaction } from "../../client/Client";
 
-const renderEmoji = (x) => {
-  switch (x.row.category.name) {
-    case "Clothing":
-      return <p>👔 Clothing</p>;
-    case "Debt":
-      return <p>💸 Debt</p>;
-    case "Food":
-      return <p>🥘 Food</p>;
-    case "Household_Supplies":
-      return <p>🚽 Household_Supplies</p>;
-    case "Housing":
-      return <p>🏠 Housing</p>;
-    case "Medical":
-      return <p>⚕️ Medical</p>;
-    case "Personal":
-      return <p>🏌️🏿 Personal</p>;
-    case "Transportation":
-      return <p>🚌 Transportation</p>;
-    case "Utilities":
-      return <p>🚰 Utilities</p>;
-    default:
-      return <p>📝</p>;
-  }
-};
-const columns = [
-  // { field: "id", headerName: "ID", flex: 0.5 },
-  {
-    field: "date",
-    headerName: "Date",
-    // cellClassName: "name-column--cell",
-    flex: 0.3,
-  },
-  {
-    field: "category",
-    headerName: "Category",
-    renderCell: (params) => renderEmoji(params),
-    flex: 0.3,
-  },
-  {
-    field: "amount",
-    headerName: "Amount",
-    type: "number",
-    headerAlign: "left",
-    align: "left",
-    flex: 0.3,
-  },
-  {
-    field: "description",
-    headerName: "Description",
-    flex: 1,
-  },
-];
+const TransactionsTable = ({
+  transactions,
+  height,
+  setTransactionToEdit,
+  toggleTransactionDrawer,
+  isTransactionPage,
+  fetchAllTransactions,
+  fetchCategoriesAndSum,
+}) => {
+  /**
+   * Call the client component's delete method with the selected row and
+   * update the transactions and categoriesandsum.
+   *
+   */
+  const handleDeleteTransaction = (transaction) => {
+    deleteTransaction(transaction.id)
+      .then(() => {
+        console.log(transaction.id + " deleted successfully");
+        fetchAllTransactions();
+        console.log("At Categories and sum");
+        fetchCategoriesAndSum();
+      })
+      .catch((error) => {
+        // error.response.json().then((res) => {
+        console.log(error.message);
+        // });
+      });
+  };
 
-const TransactionsTable = ({ transactions, height }) => {
+  /**
+   * update transactionToEdit object, with the selected row and open the transaction drawer
+   * sending the data to the server will be handled by TransactionDrawer component
+   */
+  const handleEditTransaction = (transaction) => {
+    setTransactionToEdit(transaction);
+    toggleTransactionDrawer();
+  };
+
+  /**
+   * A component containing the Delete and edit buttons
+   */
+  const ActionButtons = ({ handleDelete, handleEdit }) => {
+    return (
+      <Paper
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: ".2rem",
+          padding: "4px",
+          height: "fit-content",
+        }}
+      >
+        <IconButton size="small" onClick={handleDelete}>
+          <DeleteIcon fontSize="inherit" />
+        </IconButton>
+        <IconButton size="small" onClick={handleEdit}>
+          <EditIcon fontSize="inherit" />
+        </IconButton>
+      </Paper>
+    );
+  };
+
+  /**
+   * Render the Category column with an emoji
+   */
+  const CategoryWithEmoji = ({ emoji, text }) => {
+    return (
+      <p>
+        <span style={{ fontSize: "1.5rem", paddingRight: ".5rem" }}>
+          {emoji}
+        </span>
+        {text}
+      </p>
+    );
+  };
+
+  const renderCategoryWithEmoji = (x) => {
+    switch (x.row.category.name) {
+      case "Clothing":
+        return <CategoryWithEmoji emoji="👔" text="Clothing" />;
+      case "Debt":
+        return <CategoryWithEmoji emoji="💸" text="Debt" />;
+      case "Food":
+        return <CategoryWithEmoji emoji="🥘" text="Food" />;
+      case "Household_Supplies":
+        return <CategoryWithEmoji emoji="🚽" text="Household Supplies" />;
+      case "Housing":
+        return <CategoryWithEmoji emoji="🏠" text="Housing" />;
+      case "Medical":
+        return <CategoryWithEmoji emoji="⚕️" text="Medical" />;
+      case "Personal":
+        return <CategoryWithEmoji emoji="🏌️🏿 " text="Personal" />;
+      case "Transportation":
+        return <CategoryWithEmoji emoji="🚌" text="Transportation" />;
+      case "Utilities":
+        return <CategoryWithEmoji emoji="🚰" text="Utilities" />;
+      default:
+        return <CategoryWithEmoji emoji="📝" text="" />;
+    }
+  };
+
+  const columns = [
+    // { field: "id", headerName: "ID", flex: 0.5 },
+    {
+      field: "date",
+      headerName: "Date",
+      // cellClassName: "name-column--cell",
+      flex: 0.3,
+    },
+    {
+      field: "category",
+      headerName: "Category",
+      renderCell: (params) => renderCategoryWithEmoji(params),
+      flex: 0.4,
+    },
+    {
+      field: "amount",
+      headerName: "Amount",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+      flex: 0.3,
+    },
+    {
+      field: "description",
+      headerName: "Description",
+      flex: 0.7,
+    },
+  ];
+
   return (
     <Box
       height={height}
@@ -101,7 +180,24 @@ const TransactionsTable = ({ transactions, height }) => {
       <Paper>
         <DataGrid
           rows={transactions}
-          columns={columns}
+          columns={
+            isTransactionPage
+              ? [
+                  ...columns,
+                  {
+                    headerName: "Actions",
+                    field: "actions",
+                    renderCell: (params) => (
+                      <ActionButtons
+                        handleEdit={() => handleEditTransaction(params.row)}
+                        handleDelete={() => handleDeleteTransaction(params.row)}
+                      />
+                    ),
+                    flex: 0.2,
+                  },
+                ]
+              : columns
+          }
           getRowId={(row) => row.id}
         />
       </Paper>

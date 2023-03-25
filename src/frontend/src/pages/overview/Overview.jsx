@@ -6,6 +6,11 @@ import BalanceCard from "../../components/cards/BalanceCard";
 import LineChart from "../../components/lineChart/LineChart";
 import TransactionsTable from "../../components/transactionsTable/TransactionsTable";
 
+/**
+ *
+ * @param
+ * @returns The overview page with cards, linegraph and transaction Table
+ */
 const Overview = ({
   categoriesAndSum,
   transactions,
@@ -50,7 +55,11 @@ const Overview = ({
           />
         </Grid>
         <Grid item lg={12} sx={{ height: "25rem", width: "100%" }}>
-          <TransactionsTable transactions={transactions} height="100%" />
+          <TransactionsTable
+            transactions={transactions}
+            height="100%"
+            isTransactionPage={false}
+          />
         </Grid>
       </Grid>
     </Box>

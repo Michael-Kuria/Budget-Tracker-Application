@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -22,7 +23,7 @@ public class TransactionsController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Transaction getTransactionById(@PathVariable String id){
+    public Transaction getTransactionById(@PathVariable("id") String id){
        return service.getTransactionById(id);
     }
 
@@ -35,7 +36,9 @@ public class TransactionsController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void saveTransaction(@Valid @RequestBody Transaction transaction){
+        System.out.println(transaction);
         service.saveTransaction(transaction);
+
     }
 
     @PutMapping
@@ -43,6 +46,12 @@ public class TransactionsController {
     public void updateTransaction(@Valid @RequestBody Transaction transaction){
         System.out.println(transaction);
         service.saveTransaction(transaction);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteTransaction(@PathVariable("id")UUID id){
+        service.deleteTransactionById(id);
     }
 
 

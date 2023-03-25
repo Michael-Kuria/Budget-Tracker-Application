@@ -4,6 +4,11 @@ import Title from "../../components/title/Title";
 import LineChart from "../../components/lineChart/LineChart";
 import PieChart from "../../components/pieChart/PieChart";
 
+/**
+ *
+ * @param {*} categoriesAndSum  will be used for displaying data  on the graphs  it contains an a categoried and the total sum of transactions under that category
+ * @returns
+ */
 const Analytics = ({ categoriesAndSum }) => {
   return (
     <>

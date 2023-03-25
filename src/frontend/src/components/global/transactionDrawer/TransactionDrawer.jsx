@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormControl,
   FormErrorMessage,
@@ -26,15 +26,35 @@ const TransactionDrawer = ({
   isTransactionDrawerOpen,
   toggleTransactionDrawer,
   fetchCategoriesAndSum,
+  transactionToEdit,
+  setTransactionToEdit,
 }) => {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(transactionToEdit.date);
 
+  /**
+   * for resetting the TransactionToEdit state after closing the drawer and when editing is completed
+   */
+  const resetTransactionToEdit = () => {
+    setTransactionToEdit({
+      date: new Date(),
+      category: { name: "Housing" },
+      amount: 0,
+      description: "",
+    });
+  };
+
+  /**
+   * Perform both update and create operations: To be updated to do this separately.
+   * After successful creating/update fetch updated data from the api
+   */
   const addTransaction = (transaction) => {
     postTransaction(transaction)
       .then(() => {
         console.log("Transaction added successfully");
+        console.log(JSON.stringify(transaction));
         fetchAllTransactions();
         fetchCategoriesAndSum();
+        resetTransactionToEdit();
       })
       .catch((error) => {
         error.response.json().then((res) => {
@@ -43,36 +63,74 @@ const TransactionDrawer = ({
       });
   };
 
+  /**
+   *
+   * Category is and integer but it will need to be mapped to it's respective Category object
+   */
   const handleSubmitForm = (transaction) => {
     addTransaction({
       ...transaction,
       category: categories[parseInt(transaction.category)],
     });
+
     formik.handleReset();
   };
+
+  /**
+   * formik for form initialization and validation
+   *
+   * When enableReinitialize is true, it will reset the form once the initialvalues changes.
+   */
 
   const formik = useFormik({
     initialValues: {
       date: date,
-      category: "1",
-      amount: 0,
-      description: "",
+      category: categories.findIndex(
+        (item) => item.name === transactionToEdit.category.name
+      ),
+      amount: transactionToEdit.amount,
+      description: transactionToEdit.description,
     },
-    onSubmit: (values) => handleSubmitForm(values),
+    onSubmit: (values) =>
+      handleSubmitForm({
+        id: transactionToEdit.id,
+        ...values,
+      }),
     validationSchema: Yup.object({
       date: Yup.date().required("required"),
       category: Yup.string().required("required"),
       amount: Yup.number().min(0).required("required"),
       description: Yup.string(),
     }),
+    enableReinitialize: true,
   });
+
+  /**
+   * The date field is already being maintained as a state, this function will
+   * update the value when it is received as a String from the table during editting or as a date during resetting
+   * when the transactionToEdit state changes
+   *
+   */
+  useEffect(() => {
+    if (!(transactionToEdit.date instanceof Date)) {
+      // var dateParts = transactionToEdit.date.split("-"); // formated as yyyy-MM-dd
+      // console.log(transactionToEdit.date)
+      // setDate(new Date(dateParts[0], dateParts[1] - 1, dateParts[2]));
+      setDate(new Date(transactionToEdit.date));
+    } else {
+      setDate(transactionToEdit.date);
+    }
+  }, [transactionToEdit]);
 
   return (
     <Drawer
       variant="temporary"
       anchor="right"
       open={isTransactionDrawerOpen}
-      onClose={toggleTransactionDrawer}
+      onClose={() => {
+        toggleTransactionDrawer();
+        resetTransactionToEdit();
+      }}
     >
       <CssBaseline />
       <Box

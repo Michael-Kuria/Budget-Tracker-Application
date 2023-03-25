@@ -15,6 +15,10 @@ const SideBarRoutes = ({
   transactions,
   balance,
   totalExpenses,
+  setTransactionToEdit,
+  toggleTransactionDrawer,
+  fetchAllTransactions,
+  fetchCategoriesAndSum,
 }) => {
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -41,7 +45,15 @@ const SideBarRoutes = ({
         <Route path="/categories" element={<Categories />} />
         <Route
           path="/transactions"
-          element={<Transactions transactions={transactions} />}
+          element={
+            <Transactions
+              transactions={transactions}
+              setTransactionToEdit={setTransactionToEdit}
+              toggleTransactionDrawer={toggleTransactionDrawer}
+              fetchAllTransactions={fetchAllTransactions}
+              fetchCategoriesAndSum={fetchCategoriesAndSum}
+            />
+          }
         />
       </Routes>
     </Container>
