@@ -30,6 +30,7 @@ const TransactionDrawer = ({
   setTransactionToEdit,
 }) => {
   const [date, setDate] = useState(transactionToEdit.date);
+  const [drawerName, setDrawerName] = useState("New");
 
   /**
    * for resetting the TransactionToEdit state after closing the drawer and when editing is completed
@@ -116,8 +117,10 @@ const TransactionDrawer = ({
       // var dateParts = transactionToEdit.date.split("-"); // formated as yyyy-MM-dd
       // console.log(transactionToEdit.date)
       // setDate(new Date(dateParts[0], dateParts[1] - 1, dateParts[2]));
+      setDrawerName("Edit");
       setDate(new Date(transactionToEdit.date));
     } else {
+      setDrawerName("Add");
       setDate(transactionToEdit.date);
     }
   }, [transactionToEdit]);
@@ -143,7 +146,7 @@ const TransactionDrawer = ({
         }}
       >
         <Typography component="h3" variant="h5">
-          New Transaction
+          {drawerName} Transaction
         </Typography>
         <form onSubmit={formik.handleSubmit}>
           <FormControl isInvalid={formik.touched.date && formik.errors.date}>

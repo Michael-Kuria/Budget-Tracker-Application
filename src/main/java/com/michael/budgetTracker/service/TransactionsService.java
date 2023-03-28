@@ -32,7 +32,7 @@ public class TransactionsService {
     }
 
     public List<Transaction> getAllTransactions() {
-        return repository.findAllByOrderByDateDesc();
+        return repository.findAllByOrderByModificationDateDesc();
     }
 
     public void deleteTransactionById(UUID id){
