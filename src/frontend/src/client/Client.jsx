@@ -2,10 +2,6 @@ import fetch from "unfetch";
 
 /**
  * All client communication the api will be done from this file
- *
- *
- *
- *
  * Function to check if the response if okay if not
  * return the error
  */

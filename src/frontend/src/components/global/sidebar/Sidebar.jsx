@@ -77,7 +77,7 @@ const Sidebar = ({
       </Toolbar>
       <Divider />
       <List>
-        <Link to="/">
+        <Link to="/overview">
           <ListItem>
             <ListItemButton>
               <ListItemIcon>

@@ -11,6 +11,9 @@ import Sidebar from "../../components/global/sidebar/Sidebar";
 import Topbar from "../../components/global/topbar/Topbar";
 import TransactionDrawer from "../../components/global/transactionDrawer/TransactionDrawer";
 import SideBarRoutes from "../../components/routes/SideBarRoutes";
+import { useAuth } from "../../components/AuthContext/AuthContext";
+import { Home } from "../Home/Home";
+import { ProtectedComponent } from "../../components/helpers/ProtectedComponent";
 
 const Main = () => {
   const [isSidebarDrawerOpen, setIsSidebarDrawerOpen] = useState(true);
@@ -27,6 +30,7 @@ const Main = () => {
     amount: 0,
     description: "",
   });
+  const { isUserAuthenticated } = useAuth();
 
   const sidebarWidth = 240;
 
@@ -94,8 +98,6 @@ const Main = () => {
     const date = new Date();
     console.log(date);
 
-    console.log(date.getFullYear() + "-03-01");
-
     getBudget(date.getFullYear() + "-03-01")
       .then((res) => res.json())
       .then((data) => {
@@ -103,9 +105,7 @@ const Main = () => {
       })
       .catch((error) => {
         console.log(error.message);
-        error.response.json().then((res) => {
-          console.log(res);
-        });
+        error.response.json().then((res) => {});
       });
   };
 
@@ -122,7 +122,6 @@ const Main = () => {
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);
-        console.log("HERE " + JSON.stringify(categories));
       })
       .catch((error) => {
         console.log(error.message);
@@ -146,7 +145,6 @@ const Main = () => {
         ? 0
         : categoriesAndSum.map((item) => item.amount).reduce((a, b) => a + b)
     );
-    console.log("Now you see me in Total Expenses. HAHAHA");
   }, [categoriesAndSum]);
 
   /**
@@ -155,43 +153,52 @@ const Main = () => {
 
   useEffect(() => {
     setBalance(budget.budget - totalExpenses);
-    console.log("Now you see me in balance. HAHAHA");
   }, [budget, totalExpenses]);
 
   useEffect(() => {
     // if (transactions.length > 0) setTransactionToEdit(transactions[0]);
   }, [transactions]);
 
+  // if (isUserAuthenticated()) {
   return (
     <Box component="main" sx={{ position: "relative", display: "flex" }}>
-      <Topbar
-        isSidebarDrawerOpen={isSidebarDrawerOpen}
-        toggleSidebarDrawer={toggleSidebarDrawer}
-        sidebarWidth={sidebarWidth}
-        toggleTransactionDrawer={toggleTransactionDrawer}
-      />
-      <Sidebar
-        isSidebarDrawerOpen={isSidebarDrawerOpen}
-        toggleSidebarDrawer={toggleSidebarDrawer}
-        sidebarWidth={sidebarWidth}
-      />
-      <TransactionDrawer
-        categories={categories}
-        fetchAllTransactions={fetchAllTransactions}
-        isTransactionDrawerOpen={isTransactionDrawerOpen}
-        toggleTransactionDrawer={toggleTransactionDrawer}
-        fetchCategoriesAndSum={fetchCategoriesAndSum}
-        transactionToEdit={transactionToEdit}
-        setTransactionToEdit={setTransactionToEdit}
-      />
+      <ProtectedComponent>
+        <Topbar
+          isSidebarDrawerOpen={isSidebarDrawerOpen}
+          toggleSidebarDrawer={toggleSidebarDrawer}
+          sidebarWidth={sidebarWidth}
+          toggleTransactionDrawer={toggleTransactionDrawer}
+        />
+      </ProtectedComponent>
+
+      <ProtectedComponent>
+        <Sidebar
+          isSidebarDrawerOpen={isSidebarDrawerOpen}
+          toggleSidebarDrawer={toggleSidebarDrawer}
+          sidebarWidth={sidebarWidth}
+        />
+      </ProtectedComponent>
+      <ProtectedComponent>
+        <TransactionDrawer
+          categories={categories}
+          fetchAllTransactions={fetchAllTransactions}
+          isTransactionDrawerOpen={isTransactionDrawerOpen}
+          toggleTransactionDrawer={toggleTransactionDrawer}
+          fetchCategoriesAndSum={fetchCategoriesAndSum}
+          transactionToEdit={transactionToEdit}
+          setTransactionToEdit={setTransactionToEdit}
+        />
+      </ProtectedComponent>
       <Box
         sx={{
           flexGrow: 1,
           overflow: "auto",
-          background: "#f5f5f5",
+          background: `${isUserAuthenticated() ? "#f5f5f5" : "ffff"}`,
         }}
       >
-        <Toolbar />
+        <ProtectedComponent>
+          <Toolbar />
+        </ProtectedComponent>
         <SideBarRoutes
           transactions={transactions}
           categoriesAndSum={categoriesAndSum}
@@ -203,9 +210,13 @@ const Main = () => {
           fetchAllTransactions={fetchAllTransactions}
           fetchCategoriesAndSum={fetchCategoriesAndSum}
         />
+        <Home />
       </Box>
     </Box>
   );
+  // } else {
+  //   return <Home />;
+  // }
 };
 
 export default Main;

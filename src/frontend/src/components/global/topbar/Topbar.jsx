@@ -14,6 +14,9 @@ import {
   Typography,
 } from "@mui/material";
 import image from "../../../assets/michael.JPG";
+import { Image } from "@mui/icons-material";
+import logo from "../../../assets/logo.png";
+import { useTheme } from "styled-components";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open" && prop !== "sidebarWidth",
@@ -59,9 +62,7 @@ const Topbar = ({
         >
           <MenuIcon />
         </IconButton>
-        <Typography component="h1" variant="h6" color="inherit" noWrap>
-          Budget Tracker
-        </Typography>
+        <img src={logo} height="60px" />
         <Box sx={{ flexGrow: "1" }} />
         <Box sx={{ display: "flex", gap: "1rem" }}>
           <Button

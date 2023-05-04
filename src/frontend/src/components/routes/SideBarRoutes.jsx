@@ -5,6 +5,7 @@ import Overview from "../../pages/overview/Overview";
 import Analytics from "../../pages/analytics/Analytics";
 import Categories from "../../pages/categories/Categories";
 import Transactions from "../../pages/transactions/Transactions";
+import { ProtectedRoute } from "../helpers/ProtectedRoute";
 
 /**
  * Will take care of the components routing to prevent overcrowding app.js
@@ -26,33 +27,48 @@ const SideBarRoutes = ({
         <Route
           path="/"
           element={
-            <Overview
-              categoriesAndSum={categoriesAndSum}
-              transactions={
-                transactions.length > 5
-                  ? transactions.slice(0, 5)
-                  : transactions
-              }
-              balance={balance}
-              totalExpenses={totalExpenses}
-            />
+            <ProtectedRoute>
+              <Overview
+                categoriesAndSum={categoriesAndSum}
+                transactions={
+                  transactions.length > 5
+                    ? transactions.slice(0, 5)
+                    : transactions
+                }
+                balance={balance}
+                totalExpenses={totalExpenses}
+              />
+            </ProtectedRoute>
           }
         />
         <Route
           path="/analytics"
-          element={<Analytics categoriesAndSum={categoriesAndSum} />}
+          element={
+            <ProtectedRoute>
+              <Analytics categoriesAndSum={categoriesAndSum} />
+            </ProtectedRoute>
+          }
         />
-        <Route path="/categories" element={<Categories />} />
+        <Route
+          path="/categories"
+          element={
+            <ProtectedRoute>
+              <Categories />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/transactions"
           element={
-            <Transactions
-              transactions={transactions}
-              setTransactionToEdit={setTransactionToEdit}
-              toggleTransactionDrawer={toggleTransactionDrawer}
-              fetchAllTransactions={fetchAllTransactions}
-              fetchCategoriesAndSum={fetchCategoriesAndSum}
-            />
+            <ProtectedRoute>
+              <Transactions
+                transactions={transactions}
+                setTransactionToEdit={setTransactionToEdit}
+                toggleTransactionDrawer={toggleTransactionDrawer}
+                fetchAllTransactions={fetchAllTransactions}
+                fetchCategoriesAndSum={fetchCategoriesAndSum}
+              />
+            </ProtectedRoute>
           }
         />
       </Routes>
