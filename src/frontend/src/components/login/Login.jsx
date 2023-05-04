@@ -1,17 +1,17 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Alert } from "@mui/material";
+import { Client } from "../../client/Client";
+import { parseJWTToken } from "../helpers/Helpers";
+import { useAuth } from "../AuthContext/AuthContext";
 
 function Copyright(props) {
   return (
@@ -34,13 +34,30 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login() {
+  const [isError, setIsError] = React.useState(false);
+  const { userLogin } = useAuth();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
+    if (!data) {
+      setIsError(true);
+      return;
+    }
+    Client.authenticate(data.email, data.password)
+      .then((response) => {
+        const { token } = response.data;
+        const payload = parseJWTToken(token);
+        const user = { payload, token };
+
+        userLogin(JSON.stringify(user));
+        setIsError(false);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        setIsError(true);
+      });
   };
 
   return (
@@ -62,9 +79,10 @@ export default function Login() {
             component="form"
             onSubmit={handleSubmit}
             noValidate
-            sx={{ mt: 1 }}
+            sx={{ mt: 1, width: "300px" }}
           >
             <TextField
+              error={isError}
               margin="normal"
               required
               fullWidth
@@ -75,6 +93,7 @@ export default function Login() {
               autoFocus
             />
             <TextField
+              error={isError}
               margin="normal"
               required
               fullWidth
@@ -84,10 +103,11 @@ export default function Login() {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            {isError && (
+              <Alert severity="error">
+                The email or password provided are incorrect
+              </Alert>
+            )}
             <Button
               type="submit"
               fullWidth
@@ -96,7 +116,7 @@ export default function Login() {
             >
               Login
             </Button>
-            <Grid container>
+            {/* <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
@@ -107,7 +127,7 @@ export default function Login() {
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
-            </Grid>
+            </Grid> */}
           </Box>
         </Box>
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}

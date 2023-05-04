@@ -1,4 +1,6 @@
+import axios from "axios";
 import fetch from "unfetch";
+import { parseJWTToken } from "../components/helpers/Helpers";
 
 /**
  * All client communication the api will be done from this file
@@ -47,3 +49,41 @@ export function deleteTransaction(id) {
     method: "DELETE",
   }).then(checkStatus);
 }
+
+/**
+ * Using Axios
+ */
+
+const instance = axios.create({
+  baseURL: "http://localhost:8080",
+});
+
+instance.interceptors.request.use(
+  function (config) {
+    if (config.headers.Authorization) {
+      const token = config.headers.Authorization.split(" ")[1]; // part containing "Bearer {token}";
+      const data = parseJWTToken(token);
+
+      if (Date.now() > data.exp * 1000) {
+        window.location.href = "/login";
+      }
+    }
+
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
+const authenticate = (email, password) => {
+  return instance.post(
+    "/login",
+    { email, password },
+    { headers: { "Content-Type": "application/json" } }
+  );
+};
+
+export const Client = {
+  authenticate,
+};
