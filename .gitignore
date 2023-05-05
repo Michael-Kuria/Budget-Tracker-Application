@@ -38,3 +38,4 @@ build/
 /src/frontend/.pnp
 /src/frontend/build
 /src/frontend/node/
+/src/main/resources/certs/
