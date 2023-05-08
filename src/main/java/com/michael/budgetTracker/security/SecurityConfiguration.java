@@ -44,6 +44,12 @@ public class SecurityConfiguration {
     public final RsaKeys rsaKeys;
     public final PasswordEncoder passwordEncoder;
 
+    /**
+     * Ensure to allow access to static files, eg css, js files
+     * @param httpSecurity
+     * @return
+     * @throws Exception
+     */
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
@@ -51,9 +57,9 @@ public class SecurityConfiguration {
                 .cors().and()
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests( requests -> requests
-                        .requestMatchers("/login").permitAll()
-//                        .requestMatchers("/**").permitAll()
-                        .anyRequest().authenticated())
+//                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/api/transaction","/api/transaction/**","api/category/categories-and-sum","api/category","api/budget/").authenticated()
+                        .anyRequest().permitAll())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)

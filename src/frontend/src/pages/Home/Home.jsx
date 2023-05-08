@@ -7,7 +7,7 @@ export const Home = () => {
   return (
     <Box component="main" sx={{ width: "100%" }}>
       <Routes>
-        <Route path="/home" element={<Welcome />} />
+        <Route path="/" element={<Welcome />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     </Box>

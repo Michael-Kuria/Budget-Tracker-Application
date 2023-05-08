@@ -1,14 +1,14 @@
 ----Ensure to use '(single quotes) instead of "(double quotes)
 
-insert into categories (id, name, amount, description) values (1,'Housing', 10000, 'Your housing usage');
-insert into categories (id, name, amount, description) values (2,'Transportation', 10000, 'Your housing usage');
-insert into categories (id, name, amount, description) values (3,'Food', 10000, 'Your housing usage');
-insert into categories (id, name, amount, description) values (4,'Utilities', 10000, 'Your housing usage');
-insert into categories (id, name, amount, description) values (5,'Clothing', 10000, 'Your housing usage');
-insert into categories (id, name, amount, description) values (6,'Medical', 10000, 'Your housing usage');
-insert into categories (id, name, amount, description) values (7,'Household_Supplies', 10000, 'Your housing usage');
-insert into categories (id, name, amount, description) values (8, 'Personal', 10000, 'Your housing usage');
-insert into categories (id, name, amount, description) values (9,'Debt', 10000, 'Your housing usage');
+--insert into categories (id, name, amount, description) values (1,'Housing', 10000, 'Your housing usage');
+--insert into categories (id, name, amount, description) values (2,'Transportation', 10000, 'Your housing usage');
+--insert into categories (id, name, amount, description) values (3,'Food', 10000, 'Your housing usage');
+--insert into categories (id, name, amount, description) values (4,'Utilities', 10000, 'Your housing usage');
+--insert into categories (id, name, amount, description) values (5,'Clothing', 10000, 'Your housing usage');
+--insert into categories (id, name, amount, description) values (6,'Medical', 10000, 'Your housing usage');
+--insert into categories (id, name, amount, description) values (7,'Household_Supplies', 10000, 'Your housing usage');
+--insert into categories (id, name, amount, description) values (8, 'Personal', 10000, 'Your housing usage');
+--insert into categories (id, name, amount, description) values (9,'Debt', 10000, 'Your housing usage');
 
 --insert into budget (start_date, end_date, budget, financial_goals) values ('2023-01-01', '2022-01-31', 62667, 'China');
 --insert into budget (start_date, end_date, budget, financial_goals) values ('2023-02-01', '2022-2-28', 63848, 'China');

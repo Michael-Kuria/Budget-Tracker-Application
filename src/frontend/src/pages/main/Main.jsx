@@ -30,8 +30,8 @@ const Main = () => {
     amount: 0,
     description: "",
   });
-  const { getToken, isUserAuthenticated } = useAuth();
-  const token = getToken();
+  const { token, getToken, isUserAuthenticated } = useAuth();
+  const tokenFromLocalStorage = getToken();
 
   const sidebarWidth = 240;
 
@@ -69,7 +69,7 @@ const Main = () => {
 
   useEffect(() => {
     fetchAllTransactions();
-  }, []);
+  }, [token]);
 
   /**
    * for Categories and their current total state initialization
@@ -90,7 +90,7 @@ const Main = () => {
 
   useEffect(() => {
     fetchCategoriesAndSum();
-  }, []);
+  }, [token]);
 
   /**
    * Fetch the budget of the indicated month
@@ -112,14 +112,14 @@ const Main = () => {
 
   useEffect(() => {
     fetchBudget();
-  }, []);
+  }, [token]);
 
   /**
    * Fetch categories
    */
 
   const fetchCategories = () => {
-    getCategories(token)
+    getCategories(tokenFromLocalStorage)
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);
@@ -134,7 +134,7 @@ const Main = () => {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [token]);
 
   /**
    * update the total expense states, when categoriesAndSum state changes
@@ -146,7 +146,7 @@ const Main = () => {
         ? 0
         : categoriesAndSum.map((item) => item.amount).reduce((a, b) => a + b)
     );
-  }, [categoriesAndSum]);
+  }, [categoriesAndSum, token]);
 
   /**
    * update the balance when budget or expense total state changes
@@ -154,7 +154,7 @@ const Main = () => {
 
   useEffect(() => {
     setBalance(budget.budget - totalExpenses);
-  }, [budget, totalExpenses]);
+  }, [budget, totalExpenses, token]);
 
   useEffect(() => {
     // if (transactions.length > 0) setTransactionToEdit(transactions[0]);

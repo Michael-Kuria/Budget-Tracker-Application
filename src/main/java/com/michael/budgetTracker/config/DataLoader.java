@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 
 /**
- * Using this to initialize the categories table instead of using a schema, with the @component commented out this will not run
+ * Using this to initialize the categories table, User table and budget table instead of using a schema, with the @component commented out this will not run
  */
 @Component
 @RequiredArgsConstructor
@@ -44,7 +44,7 @@ public class DataLoader implements CommandLineRunner {
             Category category4 = new Category(4,"Utilities", 10000, "Your housing usage");
             Category category5 = new Category(5,"Clothing", 10000, "Your housing usage");
             Category category6 = new Category(6,"Medical", 10000, "Your housing usage");
-            Category category7 = new Category(7,"Household_Supplies", 10000, "Your housing usage");
+            Category category7 = new Category(7,"Household Supplies", 10000, "Your housing usage");
             Category category8 = new Category(8, "Personal", 10000, "Your housing usage");
             Category category9 = new Category(9,"Debt", 10000, "Your housing usage");
 
@@ -61,7 +61,7 @@ public class DataLoader implements CommandLineRunner {
         }
 
         if(userService.getCount() == 0){
-            User user = new User("Michael Kuria", "mchege78@gmail.com", passwordEncoder.encode("password"), UserRole.ADMIN);
+            User user = new User("Michael", "mchege78@gmail.com", passwordEncoder.encode("password"), UserRole.ADMIN);
             userService.saveUser(user);
         }
 

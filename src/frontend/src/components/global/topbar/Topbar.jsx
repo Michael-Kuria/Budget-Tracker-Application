@@ -13,10 +13,10 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import image from "../../../assets/michael.JPG";
 import { Image } from "@mui/icons-material";
 import logo from "../../../assets/logo.png";
 import { useTheme } from "styled-components";
+import { useAuth } from "../../AuthContext/AuthContext";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open" && prop !== "sidebarWidth",
@@ -44,6 +44,8 @@ const Topbar = ({
   toggleTransactionDrawer,
   sidebarWidth,
 }) => {
+  const { getToken } = useAuth();
+  const token = getToken();
   return (
     <AppBar
       position="absolute"
@@ -64,21 +66,21 @@ const Topbar = ({
         </IconButton>
         <img src={logo} height="60px" />
         <Box sx={{ flexGrow: "1" }} />
-        <Box sx={{ display: "flex", gap: "1rem" }}>
+        <Box sx={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+          <Typography>Hi, {token.payload.name}</Typography>
           <Button
             variant="contained"
             startIcon={<AddIcon />}
             sx={{ borderRadius: "100px", backgroundColor: "#007bff" }}
             onClick={toggleTransactionDrawer}
           >
-            New Transaction
+            Transaction
           </Button>
           <IconButton>
             <Badge badgeContent={1} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <Avatar alt="Michael" src={image} />
         </Box>
       </Toolbar>
     </AppBar>
