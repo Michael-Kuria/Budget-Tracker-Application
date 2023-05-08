@@ -38,4 +38,9 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(User user) {
         userRepository.delete(user);
     }
+
+    @Override
+    public long getCount() {
+        return userRepository.count();
+    }
 }

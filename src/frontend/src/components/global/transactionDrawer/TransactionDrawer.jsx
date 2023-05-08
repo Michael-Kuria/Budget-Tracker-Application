@@ -15,6 +15,7 @@ import { styled } from "@mui/material/styles";
 import { useFormik } from "formik";
 import "./transactionDrawer.css";
 import { postTransaction } from "../../../client/Client";
+import { useAuth } from "../../AuthContext/AuthContext";
 
 const Drawer = styled(MuiDrawer)(({ theme }) => ({
   zIndex: theme.zIndex.appBar + 1000,
@@ -31,6 +32,7 @@ const TransactionDrawer = ({
 }) => {
   const [date, setDate] = useState(transactionToEdit.date);
   const [drawerName, setDrawerName] = useState("New");
+  const { getToken } = useAuth();
 
   /**
    * for resetting the TransactionToEdit state after closing the drawer and when editing is completed
@@ -49,7 +51,8 @@ const TransactionDrawer = ({
    * After successful creating/update fetch updated data from the api
    */
   const addTransaction = (transaction) => {
-    postTransaction(transaction)
+    const token = getToken();
+    postTransaction(transaction, token)
       .then(() => {
         console.log("Transaction added successfully");
         console.log(JSON.stringify(transaction));

@@ -16,4 +16,6 @@ public interface UserService {
 
     void deleteUser(User user);
 
+    long getCount();
+
 }

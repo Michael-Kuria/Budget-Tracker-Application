@@ -30,7 +30,8 @@ const Main = () => {
     amount: 0,
     description: "",
   });
-  const { isUserAuthenticated } = useAuth();
+  const { getToken, isUserAuthenticated } = useAuth();
+  const token = getToken();
 
   const sidebarWidth = 240;
 
@@ -53,7 +54,7 @@ const Main = () => {
    * For transaction state initialization
    */
   const fetchAllTransactions = () => {
-    getAllTransactions()
+    getAllTransactions(token)
       .then((res) => res.json())
       .then((data) => {
         setTransactions(data);
@@ -74,7 +75,7 @@ const Main = () => {
    * for Categories and their current total state initialization
    */
   const fetchCategoriesAndSum = () => {
-    getCategoriesAndSum()
+    getCategoriesAndSum(token)
       .then((rslt) => rslt.json())
       .then((data) => {
         setCategoriesAndSum(data);
@@ -98,7 +99,7 @@ const Main = () => {
     const date = new Date();
     console.log(date);
 
-    getBudget(date.getFullYear() + "-03-01")
+    getBudget(date.getFullYear() + "-03-01", token)
       .then((res) => res.json())
       .then((data) => {
         setBudget(data);
@@ -118,7 +119,7 @@ const Main = () => {
    */
 
   const fetchCategories = () => {
-    getCategories()
+    getCategories(token)
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);

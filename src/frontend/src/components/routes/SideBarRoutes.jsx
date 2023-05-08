@@ -25,7 +25,7 @@ const SideBarRoutes = ({
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Routes>
         <Route
-          path="/"
+          path="/overview"
           element={
             <ProtectedRoute>
               <Overview

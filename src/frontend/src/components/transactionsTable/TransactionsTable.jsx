@@ -4,6 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { deleteTransaction } from "../../client/Client";
+import { useAuth } from "../AuthContext/AuthContext";
 
 const TransactionsTable = ({
   transactions,
@@ -19,8 +20,10 @@ const TransactionsTable = ({
    * update the transactions and categoriesandsum.
    *
    */
+  const { getToken } = useAuth();
   const handleDeleteTransaction = (transaction) => {
-    deleteTransaction(transaction.id)
+    const token = getToken();
+    deleteTransaction(transaction.id, token)
       .then(() => {
         console.log(transaction.id + " deleted successfully");
         fetchAllTransactions();

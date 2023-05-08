@@ -12,6 +12,7 @@ import { Alert } from "@mui/material";
 import { Client } from "../../client/Client";
 import { parseJWTToken } from "../helpers/Helpers";
 import { useAuth } from "../AuthContext/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -36,16 +37,18 @@ const theme = createTheme();
 export default function Login() {
   const [isError, setIsError] = React.useState(false);
   const { userLogin } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    console.log(data.get("email") + " " + data.get("password"));
 
     if (!data) {
       setIsError(true);
       return;
     }
-    Client.authenticate(data.email, data.password)
+    Client.authenticate(data.get("email"), data.get("password"))
       .then((response) => {
         const { token } = response.data;
         const payload = parseJWTToken(token);
@@ -53,6 +56,7 @@ export default function Login() {
 
         userLogin(JSON.stringify(user));
         setIsError(false);
+        navigate("/overview");
       })
       .catch((error) => {
         console.log(error.message);

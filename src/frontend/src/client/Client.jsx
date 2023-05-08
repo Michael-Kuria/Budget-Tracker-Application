@@ -1,6 +1,7 @@
 import axios from "axios";
 import fetch from "unfetch";
 import { parseJWTToken } from "../components/helpers/Helpers";
+import { useAuth } from "../components/AuthContext/AuthContext";
 
 /**
  * All client communication the api will be done from this file
@@ -18,35 +19,56 @@ const checkStatus = (response) => {
   return Promise.reject(error);
 };
 
-export function getAllTransactions() {
-  return fetch("/api/transaction").then(checkStatus);
+export function getAllTransactions(token) {
+  // console.log(token?.token);
+  return fetch("/api/transaction", {
+    headers: {
+      Authorization: `Bearer ${token ? token.token : ""}`,
+    },
+  }).then(checkStatus);
 }
 
-export function getCategoriesAndSum() {
-  return fetch("api/category/categories-and-sum").then(checkStatus);
+export function getCategoriesAndSum(token) {
+  return fetch("api/category/categories-and-sum", {
+    headers: {
+      Authorization: `Bearer ${token ? token.token : ""}`,
+    },
+  }).then(checkStatus);
 }
 
-export function getCategories() {
-  return fetch("api/category").then(checkStatus);
+export function getCategories(token) {
+  return fetch("api/category", {
+    headers: {
+      Authorization: `Bearer ${token ? token.token : ""}`,
+    },
+  }).then(checkStatus);
 }
 
-export function getBudget(id) {
-  return fetch("api/budget/" + id).then(checkStatus);
+export function getBudget(id, token) {
+  return fetch("api/budget/" + id, {
+    headers: {
+      Authorization: `Bearer ${token ? token.token : ""}`,
+    },
+  }).then(checkStatus);
 }
 
-export function postTransaction(transaction) {
+export function postTransaction(transaction, token) {
   return fetch("api/transaction", {
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token ? token.token : ""}`,
     },
     method: "POST",
     body: JSON.stringify(transaction),
   }).then(checkStatus);
 }
 
-export function deleteTransaction(id) {
+export function deleteTransaction(id, token) {
   return fetch(`api/transaction/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token ? token.token : ""}`,
+    },
   }).then(checkStatus);
 }
 

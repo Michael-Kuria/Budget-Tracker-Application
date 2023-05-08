@@ -2,9 +2,14 @@ package com.michael.budgetTracker.config;
 
 import com.michael.budgetTracker.model.Budget;
 import com.michael.budgetTracker.model.Category;
+import com.michael.budgetTracker.model.User;
+import com.michael.budgetTracker.model.UserRole;
 import com.michael.budgetTracker.service.BudgetService;
 import com.michael.budgetTracker.service.CategoryService;
+import com.michael.budgetTracker.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -13,15 +18,14 @@ import java.time.LocalDate;
  * Using this to initialize the categories table instead of using a schema, with the @component commented out this will not run
  */
 @Component
+@RequiredArgsConstructor
 public class DataLoader implements CommandLineRunner {
 
     private final BudgetService budgetService;
     private final CategoryService categoryService;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    public DataLoader(BudgetService budgetService, CategoryService categoryService) {
-        this.categoryService = categoryService;
-        this.budgetService = budgetService;
-    }
 
 
     @Override
@@ -54,6 +58,11 @@ public class DataLoader implements CommandLineRunner {
             categoryService.saveCategory(category8);
             categoryService.saveCategory(category9);
 
+        }
+
+        if(userService.getCount() == 0){
+            User user = new User("Michael Kuria", "mchege78@gmail.com", passwordEncoder.encode("password"), UserRole.ADMIN);
+            userService.saveUser(user);
         }
 
 

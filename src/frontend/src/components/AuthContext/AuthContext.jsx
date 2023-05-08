@@ -1,4 +1,4 @@
-import { useContext, useState, createContext } from "react";
+import { useContext, useState, createContext, useEffect } from "react";
 import { parseJWTToken } from "../helpers/Helpers";
 
 const AuthContext = createContext();
@@ -6,7 +6,14 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState();
 
-  const getUser = () => {
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(JSON.parse(storedToken));
+    }
+  }, []);
+
+  const getToken = () => {
     return JSON.parse(localStorage.getItem("token"));
   };
 
@@ -15,7 +22,8 @@ export const AuthProvider = ({ children }) => {
    * @param {} token An object containing the the decoded payload part of the JWT token and the JWT token.
    */
   const userLogin = (token) => {
-    setToken(token);
+    setToken(JSON.parse(token));
+    // console.log(token);
     localStorage.setItem("token", token);
   };
 
@@ -29,13 +37,14 @@ export const AuthProvider = ({ children }) => {
    * @returns true if user is authenticated or false if the user is not authenticated
    */
   const isUserAuthenticated = () => {
-    if (!token) return false;
+    let storedToken = localStorage.getItem("token");
+    if (!storedToken) return false;
 
     /**
      * Check the time validity of the token
      */
-
-    if (Date.now() < token.payload.exp * 1000) {
+    storedToken = JSON.parse(storedToken);
+    if (Date.now() > storedToken.payload.exp * 1000) {
       userLogout();
       return false;
     }
@@ -45,7 +54,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ token, getUser, userLogin, userLogout, isUserAuthenticated }}
+      value={{ token, getToken, userLogin, userLogout, isUserAuthenticated }}
     >
       {children}
     </AuthContext.Provider>

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Locale;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,5 +24,13 @@ public class User {
     private String email;
     private String password;
     private UserRole role;
+
+    public User(String name, String email, String password, UserRole role){
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
 
 }
