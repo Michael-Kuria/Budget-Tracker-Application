@@ -1,5 +1,6 @@
 package com.michael.budgetTracker.service;
 
+import com.michael.budgetTracker.exceptions.ObjectNotFoundException;
 import com.michael.budgetTracker.model.User;
 import com.michael.budgetTracker.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUserByEmail(String email) {
+
         return userRepository.findByEmail(email);
     }
 

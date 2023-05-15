@@ -1,12 +1,12 @@
 package com.michael.budgetTracker.service;
 
+import com.michael.budgetTracker.exceptions.ObjectNotFoundException;
 import com.michael.budgetTracker.model.Category;
 import com.michael.budgetTracker.model.CategoryAndSum;
 import com.michael.budgetTracker.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -18,13 +18,10 @@ public class CategoryService {
         this.repository = repository;
     }
 
-    public Category getCategoryById(UUID id){
-        Optional<Category> category = repository.findById(id);
-        if(category.isPresent()){
-            return category.get();
-        }
-
-        throw new IllegalArgumentException("Category with id " + id + " was not found");
+    public Category getCategoryById(int id){
+        return repository.findById(id).orElseThrow(() ->
+         new ObjectNotFoundException(String.format("Category with id %s was not found", id))
+        );
     }
 
     public void saveCategory(Category category){

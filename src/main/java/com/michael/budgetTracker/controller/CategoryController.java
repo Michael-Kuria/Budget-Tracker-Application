@@ -20,8 +20,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.FOUND)
-    public Category getCategoryById(@PathVariable UUID id){
+    public Category getCategoryById(@PathVariable int id){
         return service.getCategoryById(id);
     }
 

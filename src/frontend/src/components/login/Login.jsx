@@ -10,7 +10,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Alert } from "@mui/material";
 import { Client } from "../../client/Client";
-import { parseJWTToken } from "../helpers/Helpers";
+import { handleLogError, parseJWTToken } from "../helpers/Helpers";
 import { useAuth } from "../AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -59,7 +59,7 @@ export default function Login() {
         navigate("/overview");
       })
       .catch((error) => {
-        console.log(error.message);
+        handleLogError(error);
         setIsError(true);
       });
   };

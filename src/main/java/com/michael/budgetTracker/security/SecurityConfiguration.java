@@ -66,6 +66,7 @@ public class SecurityConfiguration {
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler()))
+
                 .build();
 
     }
@@ -118,6 +119,7 @@ public class SecurityConfiguration {
 
 
     }
+
 
 
 

@@ -22,8 +22,7 @@ public class TransactionsController {
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Transaction getTransactionById(@PathVariable("id") String id){
+    public Transaction getTransactionById(@PathVariable("id") UUID id){
        return service.getTransactionById(id);
     }
 

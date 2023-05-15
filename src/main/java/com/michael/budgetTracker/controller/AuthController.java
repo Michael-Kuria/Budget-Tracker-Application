@@ -36,7 +36,7 @@ public class AuthController {
 
             return new AuthResponse(tokenService.generateToken(user));
         }catch(BadCredentialsException ex){
-            throw new BadCredentialsException(ex.getMessage());
+            throw new BadCredentialsException("Email or password provided are incorrect");
         }
 
     }

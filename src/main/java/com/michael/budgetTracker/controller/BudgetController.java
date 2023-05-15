@@ -19,7 +19,6 @@ public class BudgetController {
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
     public Budget getBudgetById(@PathVariable LocalDate id){
         return service.getBudgetById(id);
     }

@@ -1,11 +1,11 @@
 package com.michael.budgetTracker.service;
 
+import com.michael.budgetTracker.exceptions.ObjectNotFoundException;
 import com.michael.budgetTracker.model.Transaction;
 import com.michael.budgetTracker.repository.TransactionRepository;;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -18,12 +18,11 @@ public class TransactionsService {
         this.repository = repository;
     }
 
-    public Transaction getTransactionById(String id) throws IllegalArgumentException{
-        Optional<Transaction> rslt = repository.findById(UUID.fromString(id));
-        if(rslt.isPresent()){
-            return rslt.get();
-        }
-        throw new IllegalArgumentException("Id not found");
+    public Transaction getTransactionById(UUID id){
+        return repository.findById(id).orElseThrow( () ->
+                new ObjectNotFoundException(String.format("Transaction with id %s was not found", id))
+        );
+
     }
 
     public void saveTransaction(Transaction transaction){

@@ -1,5 +1,6 @@
 package com.michael.budgetTracker.service;
 
+import com.michael.budgetTracker.exceptions.ObjectNotFoundException;
 import com.michael.budgetTracker.model.Budget;
 import com.michael.budgetTracker.repository.BudgetRepository;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class BudgetService {
         if(budget.isPresent())
             return budget.get();
 
-        throw new IllegalArgumentException("Budget with id " + id + " was not found");
+        throw new ObjectNotFoundException("Budget with id " + id + " was not found");
     }
 
     public void saveBudget(Budget budget){
