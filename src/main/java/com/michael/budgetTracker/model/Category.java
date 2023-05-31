@@ -30,14 +30,4 @@ public class Category{
         this.description = description;
     }
 
-//    @JsonCreator
-//    public Category(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("amount") int amount, @JsonProperty("description") String description){
-//        this.id = id;
-//        this.name = name;
-//        this.amount = amount;
-//        this.description = description;
-//
-//    }
-
-
 }

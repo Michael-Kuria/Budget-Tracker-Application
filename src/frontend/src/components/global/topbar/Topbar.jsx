@@ -44,7 +44,7 @@ const Topbar = ({
   toggleTransactionDrawer,
   sidebarWidth,
 }) => {
-  const { getToken } = useAuth();
+  const { getToken, userLogout } = useAuth();
   const token = getToken();
   return (
     <AppBar
@@ -68,6 +68,11 @@ const Topbar = ({
         <Box sx={{ flexGrow: "1" }} />
         <Box sx={{ display: "flex", gap: "1rem", alignItems: "center" }}>
           <Typography>Hi, {token.payload.name}</Typography>
+          <IconButton>
+            <Badge badgeContent={1} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
           <Button
             variant="contained"
             startIcon={<AddIcon />}
@@ -76,11 +81,14 @@ const Topbar = ({
           >
             Transaction
           </Button>
-          <IconButton>
-            <Badge badgeContent={1} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+
+          <Button
+            variant="contained"
+            sx={{ borderRadius: "100px", backgroundColor: "#007bff" }}
+            onClick={userLogout}
+          >
+            Logout
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>
