@@ -33,13 +33,17 @@ const Drawer = styled(MuiDrawer, {
     position: "relative",
     whiteSpace: "nowrap",
     width: sidebarWidth,
-    height: "100vh",
+    height: "100%",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
     boxSizing: "border-box",
     ...(!open && {
+      "& .MuiListItemButton-root": {
+        paddingLeft: "8px",
+        borderRadius: "500px",
+      },
       overflowX: "hidden",
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
