@@ -6,8 +6,11 @@ import com.michael.budgetTracker.repository.BudgetRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class BudgetService {
@@ -18,7 +21,7 @@ public class BudgetService {
         this.repository = repository;
     }
 
-    public Budget getBudgetById(LocalDate id){
+    public Budget getBudgetById(UUID id){
         Optional<Budget> budget = repository.findById(id);
         if(budget.isPresent())
             return budget.get();
@@ -38,4 +41,20 @@ public class BudgetService {
        return repository.findAll();
     }
 
+    public Budget getBudgetByMonth(String month){
+        return repository.findByMonth(month).stream().findFirst().get();
+    }
+
+    public Budget getBudgetByMonthAndYear(Month month, Year year){
+        Optional<Budget> budget = repository.findByMonthAndYear(month, year);
+
+        if(budget.isPresent())
+            return budget.get();
+
+        throw new ObjectNotFoundException("Budget for the month " + month.name() + " and year "+year+" was not found");
+    }
+
+    public void deleteBudget(UUID id) {
+        repository.deleteById(id);
+    }
 }

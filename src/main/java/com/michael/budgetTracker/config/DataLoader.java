@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 
 /**
  * Using this to initialize the categories table, User table and budget table instead of using a schema, with the @component commented out this will not run
@@ -31,10 +33,10 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Budget budget = new Budget(LocalDate.parse("2023-03-01"), LocalDate.parse("2023-03-31"), 30000, "Minimalistic living");
+        Budget budget = new Budget(Month.APRIL, Year.now(), 30000, "Minimalistic living");
 
         if(budgetService.budgetCount() == 0)
-            budgetService.saveBudget(budget);
+           budgetService.saveBudget(budget);
 
         if(categoryService.categoryCount() == 0) {
 

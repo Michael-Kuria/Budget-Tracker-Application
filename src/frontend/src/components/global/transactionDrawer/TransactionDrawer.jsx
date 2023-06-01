@@ -9,17 +9,12 @@ import {
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import MuiDrawer from "@mui/material/Drawer";
 import { Box, Button, CssBaseline, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import { useFormik } from "formik";
 import "./transactionDrawer.css";
 import { postTransaction } from "../../../client/Client";
 import { useAuth } from "../../AuthContext/AuthContext";
-
-const Drawer = styled(MuiDrawer)(({ theme }) => ({
-  zIndex: theme.zIndex.appBar + 1000,
-}));
+import Drawer from "../drawer/Drawer";
 
 const TransactionDrawer = ({
   categories,

@@ -52,6 +52,14 @@ export function getBudget(id, token) {
   }).then(checkStatus);
 }
 
+export function getBudgetByYearAndMonth(year, month, token) {
+  return fetch("api/budget/" + year + "/" + month, {
+    headers: {
+      Authorization: `Bearer ${token ? token.token : ""}`,
+    },
+  }).then(checkStatus);
+}
+
 export function postTransaction(transaction, token) {
   return fetch("api/transaction", {
     headers: {

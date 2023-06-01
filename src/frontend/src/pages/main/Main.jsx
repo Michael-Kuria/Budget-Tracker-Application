@@ -6,6 +6,7 @@ import {
   getCategoriesAndSum,
   getBudget,
   getCategories,
+  getBudgetByYearAndMonth,
 } from "../../client/Client";
 import Sidebar from "../../components/global/sidebar/Sidebar";
 import Topbar from "../../components/global/topbar/Topbar";
@@ -14,6 +15,7 @@ import SideBarRoutes from "../../components/routes/SideBarRoutes";
 import { useAuth } from "../../components/AuthContext/AuthContext";
 import { Home } from "../Home/Home";
 import { ProtectedComponent } from "../../components/helpers/ProtectedComponent";
+import { monthNames } from "../../components/helpers/Helpers";
 
 const Main = () => {
   const [isSidebarDrawerOpen, setIsSidebarDrawerOpen] = useState(true);
@@ -99,7 +101,7 @@ const Main = () => {
     const date = new Date();
     console.log(date);
 
-    getBudget(date.getFullYear() + "-03-01", token)
+    getBudgetByYearAndMonth(date.getFullYear(), monthNames[3], token)
       .then((res) => res.json())
       .then((data) => {
         setBudget(data);
