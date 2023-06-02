@@ -52,11 +52,30 @@ export function getBudget(id, token) {
   }).then(checkStatus);
 }
 
+export function getBudgets(token) {
+  return fetch("api/budget", {
+    headers: {
+      Authorization: `Bearer ${token ? token.token : ""}`,
+    },
+  }).then(checkStatus);
+}
+
 export function getBudgetByYearAndMonth(year, month, token) {
   return fetch("api/budget/" + year + "/" + month, {
     headers: {
       Authorization: `Bearer ${token ? token.token : ""}`,
     },
+  }).then(checkStatus);
+}
+
+export function postBudget(budget, token) {
+  return fetch("api/budget", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token ? token.token : ""}`,
+    },
+    method: "POST",
+    body: JSON.stringify(budget),
   }).then(checkStatus);
 }
 

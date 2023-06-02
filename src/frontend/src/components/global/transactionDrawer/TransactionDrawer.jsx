@@ -49,7 +49,6 @@ const TransactionDrawer = ({
     const token = getToken();
     postTransaction(transaction, token)
       .then(() => {
-        console.log("Transaction added successfully");
         console.log(JSON.stringify(transaction));
         fetchAllTransactions();
         fetchCategoriesAndSum();

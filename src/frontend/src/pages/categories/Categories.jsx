@@ -5,17 +5,35 @@ import { DataGrid } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import BudgetDrawer from "../../components/global/budgetDrawer/BudgetDrawer";
+import { getBudgets } from "../../client/Client";
+import { useAuth } from "../../components/AuthContext/AuthContext";
+import { handleLogError } from "../../components/helpers/Helpers";
 
 const Categories = () => {
   const [openBudgetDrawer, setOpenBudgetDrawer] = React.useState(false);
   const toggleBudgetDrawer = () => setOpenBudgetDrawer(!openBudgetDrawer);
   const [budgets, setBudgets] = React.useState([]);
+  const [budgetToEdit, setBudgetToEdit] = React.useState(null);
+  const { getToken } = useAuth();
 
-  const handleEditBudget = (id) => {
-    console.log("editting ongoing");
+  const fetchAllBudgets = () => {
+    const token = getToken();
+    getBudgets(token)
+      .then((response) => response.json())
+      .then((data) => setBudgets(data))
+      .catch((error) => handleLogError(error));
   };
 
-  const ActionButton = ({ handleEditBudget }) => {
+  React.useEffect(() => {
+    fetchAllBudgets();
+  }, []);
+
+  const handleEditBudget = (budget) => {
+    setBudgetToEdit(budget);
+    toggleBudgetDrawer();
+  };
+
+  const ActionButton = ({ handleEditBudgetClick }) => {
     return (
       <Paper
         style={{
@@ -24,7 +42,7 @@ const Categories = () => {
           height: "fit-content",
         }}
       >
-        <IconButton size="small" onClick={handleEditBudget}>
+        <IconButton size="small" onClick={handleEditBudgetClick}>
           <EditIcon fontSize="inherit" />
         </IconButton>
       </Paper>
@@ -32,29 +50,23 @@ const Categories = () => {
   };
 
   const columns = [
-    // { field: "id", headerName: "ID", flex: 0.5 },
     {
-      field: "date",
-      headerName: "Date",
-      // cellClassName: "name-column--cell",
-      flex: 0.3,
-    },
-    {
-      field: "category",
-      headerName: "Category",
+      field: "time",
+      headerName: "Time",
+      renderCell: (params) => params.row.month + " " + params.row.year,
       flex: 0.4,
     },
     {
-      field: "amount",
-      headerName: "Amount",
+      field: "budget",
+      headerName: "Budget",
       type: "number",
       headerAlign: "left",
       align: "left",
       flex: 0.3,
     },
     {
-      field: "description",
-      headerName: "Description",
+      field: "financialGoals",
+      headerName: "Financial Goals",
       flex: 0.7,
     },
   ];
@@ -68,6 +80,9 @@ const Categories = () => {
       <BudgetDrawer
         openBudgetDrawer={openBudgetDrawer}
         toggleBudgetDrawer={toggleBudgetDrawer}
+        fetchAllBudgets={fetchAllBudgets}
+        budgetToEdit={budgetToEdit}
+        setBudgetToEdit={setBudgetToEdit}
       />
       <Box
         sx={{
@@ -148,7 +163,9 @@ const Categories = () => {
                   field: "action",
                   renderCell: (params) => (
                     <ActionButton
-                      handleEditBudget={() => handleEditBudget(params.row)}
+                      handleEditBudgetClick={() => {
+                        handleEditBudget(params.row);
+                      }}
                     />
                   ),
                   flex: 0.2,

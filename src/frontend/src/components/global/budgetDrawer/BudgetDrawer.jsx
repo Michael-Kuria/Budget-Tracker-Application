@@ -14,24 +14,61 @@ import { useFormik } from "formik";
 import Drawer from "../drawer/Drawer";
 import "../transactionDrawer/transactionDrawer.css";
 import { monthNames } from "../../helpers/Helpers";
+import { useAuth } from "../../AuthContext/AuthContext";
+import { postBudget } from "../../../client/Client";
+import { handleLogError } from "../../helpers/Helpers";
 
-const BudgetDrawer = ({ openBudgetDrawer, toggleBudgetDrawer }) => {
+const BudgetDrawer = ({
+  openBudgetDrawer,
+  toggleBudgetDrawer,
+  fetchAllBudgets,
+  budgetToEdit,
+  setBudgetToEdit,
+}) => {
   const date = new Date();
-  const handleSubmit = () => {
-    console.log(date);
-    console.log(date.getMonth());
+  const { getToken } = useAuth();
+
+  const addBudget = (budget) => {
+    const token = getToken();
+
+    postBudget(budget, token)
+      .then(() => {
+        fetchAllBudgets();
+        setBudgetToEdit(null);
+      })
+      .catch((error) => {
+        handleLogError(error);
+      });
   };
+
+  const handleSubmitForm = (values) => {
+    console.log(values);
+    budgetToEdit === null
+      ? addBudget({
+          ...values,
+          year: date.getFullYear(),
+        })
+      : addBudget({
+          ...values,
+          year: date.getFullYear(),
+          id: budgetToEdit.id,
+        });
+    formik.handleReset();
+  };
+
   const formik = useFormik({
     initialValues: {
-      month: date.getMonth(),
-      amount: 30000,
-      description: "",
+      month: budgetToEdit !== null ? budgetToEdit.month : date.getMonth(),
+      budget: budgetToEdit !== null ? budgetToEdit.budget : 30000,
+      financialGoals: budgetToEdit !== null ? budgetToEdit.financialGoals : "",
     },
-    onSubmit: (values) => handleSubmit(values),
+    onSubmit: (values) => {
+      handleSubmitForm(values);
+    },
     validationSchema: Yup.object({
       month: Yup.string().required("required"),
-      amount: Yup.number().min(0).required("required"),
-      description: Yup.string(),
+      budget: Yup.number().min(0).required("required"),
+      financialGoals: Yup.string(),
     }),
     enableReinitialize: true,
   });
@@ -43,6 +80,7 @@ const BudgetDrawer = ({ openBudgetDrawer, toggleBudgetDrawer }) => {
       open={openBudgetDrawer}
       onClose={() => {
         toggleBudgetDrawer();
+        setBudgetToEdit(null);
       }}
     >
       <Box
@@ -61,16 +99,19 @@ const BudgetDrawer = ({ openBudgetDrawer, toggleBudgetDrawer }) => {
           <FormControl isInvalid={formik.touched.month && formik.errors.month}>
             <FormLabel htmlFor="month">Month</FormLabel>
             <select id="month" {...formik.getFieldProps("month")}>
-              {monthNames
-                .filter((month, index) => index >= date.getMonth())
-                .map((month, index) => {
-                  return (
-                    <option key={index} value={month}>
-                      {month}
-                    </option>
-                  );
-                })}
-              ;
+              {budgetToEdit === null ? (
+                monthNames
+                  .filter((month, index) => index >= date.getMonth())
+                  .map((month, index) => {
+                    return (
+                      <option key={index} value={month}>
+                        {month}
+                      </option>
+                    );
+                  })
+              ) : (
+                <option>{budgetToEdit.month}</option>
+              )}
             </select>
             <FormErrorMessage>{formik.errors.month}</FormErrorMessage>
           </FormControl>
@@ -78,24 +119,26 @@ const BudgetDrawer = ({ openBudgetDrawer, toggleBudgetDrawer }) => {
           <FormControl
             isInvalid={formik.touched.amount && formik.errors.amount}
           >
-            <FormLabel htmlFor="amount">Amount</FormLabel>
+            <FormLabel htmlFor="budget">Budget</FormLabel>
             <Input
               type="number"
-              id="amount"
-              {...formik.getFieldProps("amount")}
+              id="budget"
+              {...formik.getFieldProps("budget")}
             />
-            <FormErrorMessage>{formik.errors.amount}</FormErrorMessage>
+            <FormErrorMessage>{formik.errors.budget}</FormErrorMessage>
           </FormControl>
 
           <FormControl
-            isInvalid={formik.touched.description && formik.errors.description}
+            isInvalid={
+              formik.touched.financialGoals && formik.errors.financialGoals
+            }
           >
-            <FormLabel htmlFor="description">Description</FormLabel>
+            <FormLabel htmlFor="financialGoals">Financial Goals</FormLabel>
             <Textarea
-              id="description"
-              {...formik.getFieldProps("description")}
+              id="financialGoals"
+              {...formik.getFieldProps("financialGoals")}
             />
-            <FormErrorMessage>{formik.errors.description}</FormErrorMessage>
+            <FormErrorMessage>{formik.errors.financialGoals}</FormErrorMessage>
           </FormControl>
           <Button
             type="submit"
