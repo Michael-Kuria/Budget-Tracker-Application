@@ -6,6 +6,8 @@ import com.michael.budgetTracker.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Month;
+import java.time.Year;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,6 +42,11 @@ public class CategoryController {
     @GetMapping("/categories-and-sum")
     public List<CategoryAndSum> findCategoriesAndSum(){
         return service.getCategoriesAndSum();
+    }
+
+    @GetMapping("/categories-and-sum/{year}/{month}")
+    public List<CategoryAndSum> findCategoriesAndSumForAMonth(@PathVariable Year year, @PathVariable Month month){
+        return service.getCategoriesAndSumForAMonth(year, month);
     }
 
 

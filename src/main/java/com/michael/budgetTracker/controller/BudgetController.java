@@ -1,6 +1,8 @@
 package com.michael.budgetTracker.controller;
 
 import com.michael.budgetTracker.model.Budget;
+import com.michael.budgetTracker.model.dto.BudgetTotal;
+import com.michael.budgetTracker.model.dto.MonthAndYear;
 import com.michael.budgetTracker.service.BudgetService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +33,19 @@ public class BudgetController {
         return service.getAllBudgets();
     }
 
+    @GetMapping("/total")
+    public BudgetTotal getBudgetTotal(){
+        return service.getBudgetTotal();
+    }
+
     @GetMapping("/{year}/{month}")
     public Budget getBudgetByYearAndMonth(@PathVariable Month month, @PathVariable Year year){
         return service.getBudgetByMonthAndYear(month, year);
+    }
+
+    @GetMapping("/month-and-year")
+    public List<MonthAndYear> getBudgetMonthAndYear(){
+        return service.getBudgetMonthAndYear();
     }
 
     @PostMapping

@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { Container } from "@mui/material";
 import Overview from "../../pages/overview/Overview";
 import Analytics from "../../pages/analytics/Analytics";
-import Categories from "../../pages/categories/Categories";
+import Budgets from "../../pages/budgets/Budgets";
 import Transactions from "../../pages/transactions/Transactions";
 import { ProtectedRoute } from "../helpers/ProtectedRoute";
 
@@ -50,10 +50,10 @@ const SideBarRoutes = ({
           }
         />
         <Route
-          path="/categories"
+          path="/budgets"
           element={
             <ProtectedRoute>
-              <Categories />
+              <Budgets />
             </ProtectedRoute>
           }
         />

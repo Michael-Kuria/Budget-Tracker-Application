@@ -9,13 +9,16 @@ import { getBudgets } from "../../client/Client";
 import { useAuth } from "../../components/AuthContext/AuthContext";
 import { handleLogError } from "../../components/helpers/Helpers";
 
-const Categories = () => {
+const Budgets = () => {
   const [openBudgetDrawer, setOpenBudgetDrawer] = React.useState(false);
   const toggleBudgetDrawer = () => setOpenBudgetDrawer(!openBudgetDrawer);
   const [budgets, setBudgets] = React.useState([]);
   const [budgetToEdit, setBudgetToEdit] = React.useState(null);
   const { getToken } = useAuth();
 
+  /**
+   * Fetch all the budgets from the database
+   */
   const fetchAllBudgets = () => {
     const token = getToken();
     getBudgets(token)
@@ -24,15 +27,29 @@ const Categories = () => {
       .catch((error) => handleLogError(error));
   };
 
+  /**
+   *
+   * function to be called once the component renders
+   */
+
   React.useEffect(() => {
     fetchAllBudgets();
   }, []);
 
+  /**
+   * To be called once the edit button is clicked
+   * @param {*} budget
+   */
   const handleEditBudget = (budget) => {
     setBudgetToEdit(budget);
     toggleBudgetDrawer();
   };
 
+  /**
+   * A component to render the edit button
+   * @param {} param0
+   * @returns
+   */
   const ActionButton = ({ handleEditBudgetClick }) => {
     return (
       <Paper
@@ -49,6 +66,9 @@ const Categories = () => {
     );
   };
 
+  /**
+   * A definition of how the table columns will be defined
+   */
   const columns = [
     {
       field: "time",
@@ -180,4 +200,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default Budgets;

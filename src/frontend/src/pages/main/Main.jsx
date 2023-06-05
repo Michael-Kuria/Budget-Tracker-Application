@@ -7,6 +7,7 @@ import {
   getBudget,
   getCategories,
   getBudgetByYearAndMonth,
+  getTransactionsByMonth,
 } from "../../client/Client";
 import Sidebar from "../../components/global/sidebar/Sidebar";
 import Topbar from "../../components/global/topbar/Topbar";
@@ -16,6 +17,10 @@ import { useAuth } from "../../components/AuthContext/AuthContext";
 import { Home } from "../Home/Home";
 import { ProtectedComponent } from "../../components/helpers/ProtectedComponent";
 import { monthNames } from "../../components/helpers/Helpers";
+import {
+  TransactionFilterProvider,
+  useTransactionFilterContext,
+} from "../../components/transactionFilter/TransactionFilterContext";
 
 const Main = () => {
   const [isSidebarDrawerOpen, setIsSidebarDrawerOpen] = useState(true);
@@ -34,6 +39,13 @@ const Main = () => {
   });
   const { token, getToken, isUserAuthenticated } = useAuth();
   const tokenFromLocalStorage = getToken();
+
+  const {
+    transactionFilterValue,
+    setFilterValue,
+    transactionFilterList,
+    setFilterList,
+  } = useTransactionFilterContext();
 
   const sidebarWidth = 240;
 
@@ -56,28 +68,45 @@ const Main = () => {
    * For transaction state initialization
    */
   const fetchAllTransactions = () => {
-    getAllTransactions(token)
-      .then((res) => res.json())
-      .then((data) => {
-        setTransactions(data);
-      })
-      .catch((error) => {
-        console.log(error.message);
-        error.response.json().then((res) => {
-          console.log(res);
+    const filter = transactionFilterList[transactionFilterValue];
+    if (filter.month == "All") {
+      getAllTransactions(token)
+        .then((res) => res.json())
+        .then((data) => {
+          setTransactions(data);
+        })
+        .catch((error) => {
+          console.log(error.message);
+          error.response.json().then((res) => {
+            console.log(res);
+          });
         });
-      });
+    } else {
+      getTransactionsByMonth(filter, token)
+        .then((res) => res.json())
+        .then((data) => {
+          setTransactions(data);
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error.message);
+          error.response.json().then((res) => {
+            console.log(res);
+          });
+        });
+    }
   };
 
   useEffect(() => {
     fetchAllTransactions();
-  }, [token]);
+  }, [token, transactionFilterValue]);
 
   /**
    * for Categories and their current total state initialization
    */
   const fetchCategoriesAndSum = () => {
-    getCategoriesAndSum(token)
+    const filter = transactionFilterList[transactionFilterValue];
+    getCategoriesAndSum(token, filter)
       .then((rslt) => rslt.json())
       .then((data) => {
         setCategoriesAndSum(data);
@@ -92,16 +121,14 @@ const Main = () => {
 
   useEffect(() => {
     fetchCategoriesAndSum();
-  }, [token]);
+  }, [token, transactionFilterValue]);
 
   /**
    * Fetch the budget of the indicated month
    */
   const fetchBudget = () => {
-    const date = new Date();
-    console.log(date);
-
-    getBudgetByYearAndMonth(date.getFullYear(), monthNames[3], token)
+    const filter = transactionFilterList[transactionFilterValue];
+    getBudget(filter, token)
       .then((res) => res.json())
       .then((data) => {
         setBudget(data);
@@ -114,7 +141,7 @@ const Main = () => {
 
   useEffect(() => {
     fetchBudget();
-  }, [token]);
+  }, [token, transactionFilterValue]);
 
   /**
    * Fetch categories

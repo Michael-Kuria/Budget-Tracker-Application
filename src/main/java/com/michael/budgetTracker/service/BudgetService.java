@@ -2,6 +2,8 @@ package com.michael.budgetTracker.service;
 
 import com.michael.budgetTracker.exceptions.ObjectNotFoundException;
 import com.michael.budgetTracker.model.Budget;
+import com.michael.budgetTracker.model.dto.BudgetTotal;
+import com.michael.budgetTracker.model.dto.MonthAndYear;
 import com.michael.budgetTracker.repository.BudgetRepository;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +54,14 @@ public class BudgetService {
             return budget.get();
 
         throw new ObjectNotFoundException("Budget for the month " + month.name() + " and year "+year+" was not found");
+    }
+
+    public List<MonthAndYear> getBudgetMonthAndYear(){
+        return repository.findMonthAndYear();
+    }
+
+    public BudgetTotal getBudgetTotal(){
+        return repository.findTotalBudget();
     }
 
     public void deleteBudget(UUID id) {

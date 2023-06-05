@@ -111,13 +111,13 @@ const Sidebar = ({
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to="/categories">
+        <Link to="/budgets">
           <ListItem>
             <ListItemButton>
               <ListItemIcon>
                 <CategoryOutlinedIcon />
               </ListItemIcon>
-              <ListItemText>Categories</ListItemText>
+              <ListItemText>Budgets</ListItemText>
             </ListItemButton>
           </ListItem>
         </Link>

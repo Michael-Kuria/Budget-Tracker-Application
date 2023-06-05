@@ -5,6 +5,7 @@ import AmountUsedCard from "../../components/cards/AmountUsedCard";
 import BalanceCard from "../../components/cards/BalanceCard";
 import LineChart from "../../components/lineChart/LineChart";
 import TransactionsTable from "../../components/transactionsTable/TransactionsTable";
+import TransactionFilter from "../../components/transactionFilter/TransactionFilter";
 
 /**
  *
@@ -38,6 +39,7 @@ const Overview = ({
           >
             <BalanceCard balance={balance} />
             <AmountUsedCard totalExpenses={totalExpenses} />
+            <TransactionFilter />
           </Box>
         </Grid>
         <Grid item lg={12} sx={{ height: "30rem", width: "100%" }}>

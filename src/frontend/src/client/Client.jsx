@@ -28,12 +28,31 @@ export function getAllTransactions(token) {
   }).then(checkStatus);
 }
 
-export function getCategoriesAndSum(token) {
-  return fetch("api/category/categories-and-sum", {
+export function getTransactionsByMonth(yearMonth, token) {
+  return fetch("/api/transaction/" + yearMonth.year + "/" + yearMonth.month, {
     headers: {
       Authorization: `Bearer ${token ? token.token : ""}`,
     },
   }).then(checkStatus);
+}
+
+export function getCategoriesAndSum(token, filter) {
+  if (filter.month === "All") {
+    return fetch("api/category/categories-and-sum", {
+      headers: {
+        Authorization: `Bearer ${token ? token.token : ""}`,
+      },
+    }).then(checkStatus);
+  } else {
+    return fetch(
+      "api/category/categories-and-sum/" + filter.year + "/" + filter.month,
+      {
+        headers: {
+          Authorization: `Bearer ${token ? token.token : ""}`,
+        },
+      }
+    ).then(checkStatus);
+  }
 }
 
 export function getCategories(token) {
@@ -44,12 +63,20 @@ export function getCategories(token) {
   }).then(checkStatus);
 }
 
-export function getBudget(id, token) {
-  return fetch("api/budget/" + id, {
-    headers: {
-      Authorization: `Bearer ${token ? token.token : ""}`,
-    },
-  }).then(checkStatus);
+export function getBudget(filter, token) {
+  if (filter.month === "All") {
+    return fetch("api/budget/total", {
+      headers: {
+        Authorization: `Bearer ${token ? token.token : ""}`,
+      },
+    }).then(checkStatus);
+  } else {
+    return fetch("api/budget/" + filter.year + "/" + filter.month, {
+      headers: {
+        Authorization: `Bearer ${token ? token.token : ""}`,
+      },
+    }).then(checkStatus);
+  }
 }
 
 export function getBudgets(token) {
