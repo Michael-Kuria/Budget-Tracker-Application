@@ -20,6 +20,7 @@ const SideBarRoutes = ({
   toggleTransactionDrawer,
   fetchAllTransactions,
   fetchCategoriesAndSum,
+  budget,
 }) => {
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -37,6 +38,7 @@ const SideBarRoutes = ({
                 }
                 balance={balance}
                 totalExpenses={totalExpenses}
+                budget={budget}
               />
             </ProtectedRoute>
           }

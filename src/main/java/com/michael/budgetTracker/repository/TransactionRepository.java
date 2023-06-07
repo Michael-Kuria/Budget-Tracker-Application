@@ -13,7 +13,7 @@ import java.util.UUID;
 public interface TransactionRepository extends ListCrudRepository<Transaction, UUID> {
 
     List<Transaction> findAllByOrderByModificationDateDesc();
-    List<Transaction> findAllByDateGreaterThanAndDateLessThan(LocalDate start, LocalDate end);
+    List<Transaction> findAllByDateBetween(LocalDate start, LocalDate end);
 
 
 

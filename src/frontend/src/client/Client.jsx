@@ -95,6 +95,14 @@ export function getBudgetByYearAndMonth(year, month, token) {
   }).then(checkStatus);
 }
 
+export function getMonthAndYears(token) {
+  return fetch("api/budget/month-and-year", {
+    headers: {
+      Authorization: `Bearer ${token ? token.token : ""}`,
+    },
+  }).then(checkStatus);
+}
+
 export function postBudget(budget, token) {
   return fetch("api/budget", {
     headers: {

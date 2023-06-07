@@ -33,22 +33,25 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Budget budget = new Budget(Month.APRIL, Year.now(), 30000, "Minimalistic living");
-
-        if(budgetService.budgetCount() == 0)
-           budgetService.saveBudget(budget);
+//        Budget budget = new Budget(Month.APRIL, Year.now(), 30000, "Minimalistic living");
+//
+//        if(budgetService.budgetCount() == 0)
+//           budgetService.saveBudget(budget);
 
         if(categoryService.categoryCount() == 0) {
 
-            Category category1 = new Category(1,"Housing", 10000, "Your housing usage");
-            Category category2 = new Category(2,"Transportation", 10000, "Your housing usage");
-            Category category3 = new Category(3,"Food", 10000, "Your housing usage");
-            Category category4 = new Category(4,"Utilities", 10000, "Your housing usage");
-            Category category5 = new Category(5,"Clothing", 10000, "Your housing usage");
-            Category category6 = new Category(6,"Medical", 10000, "Your housing usage");
-            Category category7 = new Category(7,"Household Supplies", 10000, "Your housing usage");
-            Category category8 = new Category(8, "Personal", 10000, "Your housing usage");
-            Category category9 = new Category(9,"Debt", 10000, "Your housing usage");
+            Category category1 = new Category(1,"Housing", 10000, "Rent, mortgage");
+            Category category2 = new Category(2,"Transportation", 10000, "Fuel, fare, uber");
+            Category category3 = new Category(3,"Food", 10000, "Groceries, snacks");
+            Category category4 = new Category(4,"Utilities", 10000, "gas, Water and electricity bills, internet, airtime");
+            Category category5 = new Category(5,"Clothing", 10000, "clothes, shoes");
+            Category category6 = new Category(6,"Medical", 10000, "Hospital bills, health insurance");
+            Category category7 = new Category(7,"Household Items", 10000, "toilet paper, tooth paste, furniture");
+            Category category8 = new Category(8, "Personal", 10000, "Personal enjoyment, ");
+            Category category9 = new Category(9,"Loan", 10000, "Loan repayments");
+            Category category10 = new Category(10,"Giving", 10000, "church and handouts");
+            Category category11 = new Category(11,"Transaction costs", 10000, "transactions cost");
+            Category category12 = new Category(12,"Learning", 10000, "Learning materials and courses");
 
             categoryService.saveCategory(category1);
             categoryService.saveCategory(category2);
@@ -59,6 +62,9 @@ public class DataLoader implements CommandLineRunner {
             categoryService.saveCategory(category7);
             categoryService.saveCategory(category8);
             categoryService.saveCategory(category9);
+            categoryService.saveCategory(category10);
+            categoryService.saveCategory(category11);
+            categoryService.saveCategory(category12);
 
         }
 

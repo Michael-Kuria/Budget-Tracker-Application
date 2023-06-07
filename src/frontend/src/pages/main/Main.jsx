@@ -8,6 +8,7 @@ import {
   getCategories,
   getBudgetByYearAndMonth,
   getTransactionsByMonth,
+  getMonthAndYears,
 } from "../../client/Client";
 import Sidebar from "../../components/global/sidebar/Sidebar";
 import Topbar from "../../components/global/topbar/Topbar";
@@ -136,12 +137,39 @@ const Main = () => {
       .catch((error) => {
         console.log(error.message);
         error.response.json().then((res) => {});
+        setBudget({ budget: undefined });
       });
   };
 
   useEffect(() => {
     fetchBudget();
   }, [token, transactionFilterValue]);
+
+  /**
+   * Update transactionfilterList
+   */
+  const fetchMonthAndYears = () => {
+    getMonthAndYears(token)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Here We Go");
+        console.log(data);
+        setFilterList([
+          {
+            month: "All",
+          },
+          ...data,
+        ]);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        error.response.json().then((res) => {});
+      });
+  };
+
+  useEffect(() => {
+    fetchMonthAndYears();
+  }, [token, budget]);
 
   /**
    * Fetch categories

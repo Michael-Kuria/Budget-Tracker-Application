@@ -45,7 +45,7 @@ public class CategoryController {
     }
 
     @GetMapping("/categories-and-sum/{year}/{month}")
-    public List<CategoryAndSum> findCategoriesAndSumForAMonth(@PathVariable Year year, @PathVariable Month month){
+    public List<CategoryAndSum> findCategoriesAndSumForAMonth(@PathVariable int year, @PathVariable String month){
         return service.getCategoriesAndSumForAMonth(year, month);
     }
 

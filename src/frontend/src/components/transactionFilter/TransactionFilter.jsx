@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useCallback, useMemo, useState, useRef, useEffect } from "react";
 import { useTransactionFilterContext } from "./TransactionFilterContext";
 
-const TransactionFilter = ({ fetchTransactionsByMonthAndYear }) => {
+const TransactionFilter = () => {
   const { transactionFilterList, setFilterValue, transactionFilterValue } =
     useTransactionFilterContext();
 
@@ -30,8 +30,9 @@ const TransactionFilter = ({ fetchTransactionsByMonthAndYear }) => {
       >
         {transactionFilterList.map((yearMonth, index) => (
           <option key={index} value={index}>
-            {yearMonth.month}
-            {/* // +`${yearMonth.year !== undefined ? yearMonth.year : ""}`} */}
+            {yearMonth.month +
+              " " +
+              `${yearMonth.year !== undefined ? yearMonth.year : ""}`}
           </option>
         ))}
       </select>

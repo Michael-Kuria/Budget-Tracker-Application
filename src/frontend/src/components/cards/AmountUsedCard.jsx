@@ -29,20 +29,20 @@ const AmountUsedCard = ({ totalExpenses }) => {
         background: "#f5fdf9",
         alignItems: "center",
         justifyContent: "center",
-        gap: ".5rem",
+        gap: "2rem",
         border: "1px solid #99EDC3",
       }}
     >
       <Typography component="p" variant="body1">
-        Your are on Track
+        Amount used
       </Typography>
       <Typography component="h6" variant="h5">
-        ${totalExpenses}
+        {totalExpenses} Ksh
       </Typography>
-      <Typography component="p" variant="body2">
+      {/* <Typography component="p" variant="body2">
         spent already
-      </Typography>
-      <BorderLinearProgress variant="determinate" value={80} />
+      </Typography> */}
+      {/* <BorderLinearProgress variant="determinate" value={80} /> */}
     </Paper>
     // <Box>
     //   <Card variant="outlined">

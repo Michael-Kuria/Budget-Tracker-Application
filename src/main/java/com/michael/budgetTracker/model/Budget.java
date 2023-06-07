@@ -1,9 +1,6 @@
 package com.michael.budgetTracker.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,17 +13,18 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="budgets")
 public class Budget {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private Month month;
-    private Year year;
+    private String month;
+    private int year;
     private int budget;
     private String financialGoals;
 
-    public Budget(Month month, Year year, int budget, String financialGoals){
+    public Budget(String month, int year, int budget, String financialGoals){
         this.month = month;
         this.year = year;
         this.budget = budget;

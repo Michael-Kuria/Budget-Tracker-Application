@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Typography, Paper } from "@mui/material";
+import { Typography, Paper, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
-const BalanceCard = ({ balance }) => {
+const BalanceCard = ({ balance, budget }) => {
   return (
     <Paper
       sx={{
@@ -15,13 +16,21 @@ const BalanceCard = ({ balance }) => {
         alignItems: "center",
         justifyContent: "space-between",
         border: "1px solid #3379FF",
+        gap: "2rem",
       }}
     >
       <Typography component="p" variant="body1">
-        Your total balance
+        Your balance
       </Typography>
       <Typography component="h6" variant="h4">
-        ${balance}
+        {budget.budget !== undefined ? (
+          `${balance} Ksh`
+        ) : (
+          <Button>
+            {" "}
+            <Link to="/budgets">Add budget</Link>
+          </Button>
+        )}
       </Typography>
     </Paper>
   );

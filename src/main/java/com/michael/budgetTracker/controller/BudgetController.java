@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Month;
 import java.time.Year;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,7 +40,7 @@ public class BudgetController {
     }
 
     @GetMapping("/{year}/{month}")
-    public Budget getBudgetByYearAndMonth(@PathVariable Month month, @PathVariable Year year){
+    public Budget getBudgetByYearAndMonth(@PathVariable String month, @PathVariable int year){
         return service.getBudgetByMonthAndYear(month, year);
     }
 

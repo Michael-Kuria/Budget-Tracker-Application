@@ -36,9 +36,9 @@ public class TransactionsController {
     }
 
     @GetMapping("/{year}/{month}")
-    public List<Transaction> getAllTransactionsForAMonth(@PathVariable Year year, @PathVariable Month month){
+    public List<Transaction> getAllTransactionsForAMonth(@PathVariable int year, @PathVariable String month){
         List<Transaction> all = service.getAllTransactionsForAMonth(year,month);
-        all.forEach(System.out::println);
+//        all.forEach(System.out::println);
         return all;
     }
 

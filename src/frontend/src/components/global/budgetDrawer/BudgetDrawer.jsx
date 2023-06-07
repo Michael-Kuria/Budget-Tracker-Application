@@ -58,7 +58,10 @@ const BudgetDrawer = ({
 
   const formik = useFormik({
     initialValues: {
-      month: budgetToEdit !== null ? budgetToEdit.month : date.getMonth(),
+      month:
+        budgetToEdit !== null
+          ? budgetToEdit.month
+          : monthNames[date.getMonth()],
       budget: budgetToEdit !== null ? budgetToEdit.budget : 30000,
       financialGoals: budgetToEdit !== null ? budgetToEdit.financialGoals : "",
     },

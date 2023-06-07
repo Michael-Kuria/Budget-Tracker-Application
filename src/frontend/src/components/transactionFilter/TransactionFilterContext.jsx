@@ -9,26 +9,10 @@ import {
 const TransactionFilterContext = createContext();
 
 export const TransactionFilterProvider = ({ children }) => {
-  const [transactionFilterValue, setTransactionFilterValue] = useState(1);
+  const [transactionFilterValue, setTransactionFilterValue] = useState(0);
   const [transactionFilterList, setTransactionFilterList] = useState([
     {
       month: "All",
-    },
-    {
-      month: "MARCH",
-      year: "2023",
-    },
-    {
-      month: "APRIL",
-      year: "2023",
-    },
-    {
-      month: "MAY",
-      year: "2023",
-    },
-    {
-      month: "JUNE",
-      year: "2023",
     },
   ]);
 

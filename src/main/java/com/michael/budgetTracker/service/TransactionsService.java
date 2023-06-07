@@ -38,12 +38,12 @@ public class TransactionsService {
     public List<Transaction> getAllTransactions() {
         return repository.findAllByOrderByModificationDateDesc();
     }
-    public List<Transaction> getAllTransactionsForAMonth(Year year, Month month){
-        YearMonth yearMonth = YearMonth.of(year.getValue(), month.getValue());
+    public List<Transaction> getAllTransactionsForAMonth(int year, String month){
+        YearMonth yearMonth = YearMonth.of(year, Month.valueOf(month.toUpperCase()));
         LocalDate start = yearMonth.atDay(1);
         LocalDate end = yearMonth.atEndOfMonth();
 
-        return repository.findAllByDateGreaterThanAndDateLessThan(start, end);
+        return repository.findAllByDateBetween(start, end);
     }
 
     public void deleteTransactionById(UUID id){

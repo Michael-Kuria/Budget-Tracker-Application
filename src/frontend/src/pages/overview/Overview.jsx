@@ -17,6 +17,7 @@ const Overview = ({
   transactions,
   balance,
   totalExpenses,
+  budget,
 }) => {
   return (
     <Box paddingBottom="5rem">
@@ -37,7 +38,7 @@ const Overview = ({
               height: "100%",
             }}
           >
-            <BalanceCard balance={balance} />
+            <BalanceCard balance={balance} budget={budget} />
             <AmountUsedCard totalExpenses={totalExpenses} />
             <TransactionFilter />
           </Box>

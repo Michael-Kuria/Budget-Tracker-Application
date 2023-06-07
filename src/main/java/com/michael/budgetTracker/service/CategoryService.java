@@ -38,8 +38,8 @@ public class CategoryService {
     public List<CategoryAndSum> getCategoriesAndSum(){
         return repository.findCategoriesAndSum();
     }
-    public List<CategoryAndSum> getCategoriesAndSumForAMonth(Year year, Month month){
-        YearMonth yearMonth = YearMonth.of(year.getValue(), month.getValue());
+    public List<CategoryAndSum> getCategoriesAndSumForAMonth(int year, String month){
+        YearMonth yearMonth = YearMonth.of(year, Month.valueOf(month.toUpperCase()));
         LocalDate start = yearMonth.atDay(1);
         LocalDate end = yearMonth.atEndOfMonth();
         return repository.findCategoriesAndSumForAMonth(start, end);
