@@ -88,11 +88,11 @@ const TransactionsTable = ({
     switch (x.row.category.name) {
       case "Clothing":
         return <CategoryWithEmoji emoji="👔" text="Clothing" />;
-      case "Debt":
-        return <CategoryWithEmoji emoji="💸" text="Debt" />;
+      case "Loan":
+        return <CategoryWithEmoji emoji="💸" text="Loan" />;
       case "Food":
         return <CategoryWithEmoji emoji="🥘" text="Food" />;
-      case "Household_Supplies":
+      case "Household Supplies":
         return <CategoryWithEmoji emoji="🚽" text="Household Supplies" />;
       case "Housing":
         return <CategoryWithEmoji emoji="🏠" text="Housing" />;
@@ -104,6 +104,14 @@ const TransactionsTable = ({
         return <CategoryWithEmoji emoji="🚌" text="Transportation" />;
       case "Utilities":
         return <CategoryWithEmoji emoji="🚰" text="Utilities" />;
+      case "Household Items":
+        return <CategoryWithEmoji emoji="🏌️🏿 " text="Household Items" />;
+      case "Giving":
+        return <CategoryWithEmoji emoji="💸" text="Giving" />;
+      case "Transaction costs":
+        return <CategoryWithEmoji emoji="💸" text="Transaction costs" />;
+      case "Learning":
+        return <CategoryWithEmoji emoji="📝" text="Learning" />;
       default:
         return <CategoryWithEmoji emoji="📝" text="" />;
     }

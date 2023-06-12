@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.Month;
 import java.time.Year;
+import java.util.Comparator;
 import java.util.UUID;
 
 @Entity
@@ -14,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="budgets")
-public class Budget {
+public class Budget implements Comparable<Budget> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -31,4 +32,13 @@ public class Budget {
         this.financialGoals = financialGoals;
     }
 
+
+    @Override
+    public int compareTo(Budget o) {
+        Month thisMonth = Month.valueOf(this.month.toUpperCase());
+        Month month = Month.valueOf(o.getMonth().toUpperCase());
+        return this.year > o.getYear() ? -1 :
+                this.year < o.year ? 1 :
+                        month.compareTo(thisMonth);
+    }
 }

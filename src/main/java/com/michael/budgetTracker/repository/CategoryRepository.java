@@ -14,10 +14,10 @@ import java.util.UUID;
 @Repository
 public interface CategoryRepository extends ListCrudRepository<Category, Integer> {
     @Query(value ="SELECT c.name as NAME, SUM(t.amount) as AMOUNT FROM transactions t, categories c WHERE t.category_id=c.id " +
-            "GROUP BY c.name", nativeQuery = true)
+            "GROUP BY c.name ORDER BY c.name", nativeQuery = true)
     List<CategoryAndSum> findCategoriesAndSum();
 
     @Query(value = "SELECT c.name as NAME, SUM(t.amount) as AMOUNT FROM transactions t, categories c WHERE t.category_id=c.id " +
-            "AND t.date BETWEEN :start AND :end GROUP BY c.name" , nativeQuery = true)
+            "AND t.date BETWEEN :start AND :end GROUP BY c.name ORDER BY c.name" , nativeQuery = true)
     List<CategoryAndSum> findCategoriesAndSumForAMonth(@Param("start") LocalDate start, @Param("end") LocalDate end);
 }

@@ -27,7 +27,7 @@ public class Transaction {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name="category_id", referencedColumnName = "id", nullable = false, updatable = false)
+    @JoinColumn(name="category_id", referencedColumnName = "id", nullable = false, updatable = true)
     private Category category;
 
 //    private Account account;

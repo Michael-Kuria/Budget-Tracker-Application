@@ -11,9 +11,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
 import java.time.YearMonth;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class BudgetService {
@@ -41,7 +39,9 @@ public class BudgetService {
     }
 
     public List<Budget> getAllBudgets() {
-       return repository.findAll();
+       List<Budget> rslt = repository.findAll();
+       Collections.sort(rslt);
+       return rslt;
     }
 
     public Budget getBudgetByMonth(String month){
@@ -58,7 +58,11 @@ public class BudgetService {
     }
 
     public List<MonthAndYear> getBudgetMonthAndYear(){
-        return repository.findMonthAndYear();
+        List<MonthAndYear> rslt = repository.findMonthAndYear();
+        Collections.sort(rslt, (o1, o2) -> o1.getYear() > o2.getYear()? -1 :
+                o1.getYear() < o2.getYear() ? 1 :
+                        Month.valueOf(o2.getMonth().toUpperCase()).compareTo(Month.valueOf(o1.getMonth().toUpperCase())));
+        return rslt;
     }
 
     public BudgetTotal getBudgetTotal(){

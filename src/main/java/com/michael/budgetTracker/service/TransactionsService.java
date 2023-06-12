@@ -36,14 +36,14 @@ public class TransactionsService {
     }
 
     public List<Transaction> getAllTransactions() {
-        return repository.findAllByOrderByModificationDateDesc();
+        return repository.findAllByOrderByDateDesc();
     }
     public List<Transaction> getAllTransactionsForAMonth(int year, String month){
         YearMonth yearMonth = YearMonth.of(year, Month.valueOf(month.toUpperCase()));
         LocalDate start = yearMonth.atDay(1);
         LocalDate end = yearMonth.atEndOfMonth();
 
-        return repository.findAllByDateBetween(start, end);
+        return repository.findAllByDateBetweenOrderByDateDesc(start, end);
     }
 
     public void deleteTransactionById(UUID id){
