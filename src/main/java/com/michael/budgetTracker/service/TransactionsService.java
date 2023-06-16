@@ -6,10 +6,7 @@ import com.michael.budgetTracker.model.dto.MonthAndYear;
 import com.michael.budgetTracker.repository.TransactionRepository;;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.Year;
-import java.time.YearMonth;
+import java.time.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,19 +28,20 @@ public class TransactionsService {
     }
 
     public void saveTransaction(Transaction transaction){
-
+        transaction.setModificationDate(LocalDateTime.now());
         repository.save(transaction);
+
     }
 
     public List<Transaction> getAllTransactions() {
-        return repository.findAllByOrderByDateDesc();
+        return repository.findAllByOrderByDateDescModificationDateDesc();
     }
     public List<Transaction> getAllTransactionsForAMonth(int year, String month){
         YearMonth yearMonth = YearMonth.of(year, Month.valueOf(month.toUpperCase()));
         LocalDate start = yearMonth.atDay(1);
         LocalDate end = yearMonth.atEndOfMonth();
 
-        return repository.findAllByDateBetweenOrderByDateDesc(start, end);
+        return repository.findAllByDateBetweenOrderByDateDescModificationDateDesc(start, end);
     }
 
     public void deleteTransactionById(UUID id){
