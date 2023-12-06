@@ -28,6 +28,7 @@ const TransactionDrawer = ({
   const [date, setDate] = useState(transactionToEdit.date);
   const [drawerName, setDrawerName] = useState("New");
   const { getToken } = useAuth();
+  const [enableReinitializeValue, setEnableReinitializeValue] = useState(false);
 
   /**
    * for resetting the TransactionToEdit state after closing the drawer and when editing is completed
@@ -63,7 +64,7 @@ const TransactionDrawer = ({
 
   /**
    *
-   * Category is and integer but it will need to be mapped to it's respective Category object
+   * Category is an integer but it will need to be mapped to it's respective Category object
    */
   const handleSubmitForm = (transaction) => {
     addTransaction({
@@ -100,7 +101,7 @@ const TransactionDrawer = ({
       amount: Yup.number().min(0).required("required"),
       description: Yup.string(),
     }),
-    enableReinitialize: true,
+    enableReinitialize: enableReinitializeValue,
   });
 
   /**
@@ -111,13 +112,12 @@ const TransactionDrawer = ({
    */
   useEffect(() => {
     if (!(transactionToEdit.date instanceof Date)) {
-      // var dateParts = transactionToEdit.date.split("-"); // formated as yyyy-MM-dd
-      // console.log(transactionToEdit.date)
-      // setDate(new Date(dateParts[0], dateParts[1] - 1, dateParts[2]));
       setDrawerName("Edit");
+      setEnableReinitializeValue(true);
       setDate(new Date(transactionToEdit.date));
     } else {
       setDrawerName("Add");
+      setEnableReinitializeValue(false);
       setDate(transactionToEdit.date);
     }
   }, [transactionToEdit]);
