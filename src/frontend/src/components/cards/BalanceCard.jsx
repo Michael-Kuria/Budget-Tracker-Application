@@ -10,21 +10,25 @@ const BalanceCard = ({ balance, budget }) => {
         flexDirection: "column",
         padding: "1rem",
         borderRadius: "1rem",
-        height: " 100%",
-        width: "300px",
+        height: "fit",
+        width: "250px",
         background: "#adc9ff",
-        alignItems: "center",
-        justifyContent: "space-between",
+        alignItems: "left",
+        // justifyContent: "space-between",
         border: "1px solid #3379FF",
         gap: "2rem",
       }}
     >
-      <Typography component="p" variant="body1">
+      <Typography component="p" variant="body2" sx={{ lineHeight: 0.5, fontWeight: 300}}>
         Your balance
       </Typography>
-      <Typography component="h6" variant="h4">
+      <Typography
+        component="h6"
+        variant="subtitle1"
+        sx={{ fontWeight: 500, lineHeight: 0.5 }}
+      >
         {budget.budget !== undefined ? (
-          `${balance} Ksh`
+          `Ksh ${balance}`
         ) : (
           <Button>
             {" "}

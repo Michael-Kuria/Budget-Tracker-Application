@@ -36,7 +36,7 @@ const TransactionDrawer = ({
   const resetTransactionToEdit = () => {
     setTransactionToEdit({
       date: new Date(),
-      category: { name: "Housing" },
+      category: categories.findIndex((item) => item.name === "Housing"),
       amount: 0,
       description: "",
     });

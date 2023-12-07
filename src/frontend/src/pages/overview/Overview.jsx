@@ -27,7 +27,7 @@ const Overview = ({
       />
 
       <Grid container spacing={4} mt={2}>
-        <Grid item lg={12} md={12}>
+        <Grid item lg={12} md={12} >
           <Box
             sx={{
               display: "flex",

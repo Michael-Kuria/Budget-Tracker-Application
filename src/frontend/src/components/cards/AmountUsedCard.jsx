@@ -24,20 +24,24 @@ const AmountUsedCard = ({ totalExpenses }) => {
         flexDirection: "column",
         padding: "1rem",
         borderRadius: "1rem",
-        width: "300px",
-        height: " 100%",
+        height: "fit",
+        width: "250px",
         background: "#f5fdf9",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "2rem",
+        alignItems: "left",
+        // justifyContent: "space-between",
         border: "1px solid #99EDC3",
+        gap: "2rem",
       }}
     >
-      <Typography component="p" variant="body1">
+      <Typography component="p" variant="body2" sx={{ lineHeight: 0.5, fontWeight: 300}}>
         Amount used
       </Typography>
-      <Typography component="h6" variant="h5">
-        {totalExpenses} Ksh
+      <Typography
+        component="h6"
+        variant="subtitle1"
+        sx={{ fontWeight: 500, lineHeight: 0.5 }}
+      >
+        Ksh {totalExpenses}
       </Typography>
       {/* <Typography component="p" variant="body2">
         spent already
