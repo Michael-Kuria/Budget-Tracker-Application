@@ -6,6 +6,7 @@
    margin: 0;
    box-sizing: border-box;
    font-family: "Roboto", Helvetica, sans-serif;
+   font-weight: 300;
 }
 
 a{
@@ -13,10 +14,68 @@ a{
    color: inherit;
 }
 
-.select{
+/* .select{
    width : 200px;
    height : 50px;
-   border-radius: 2px;
-   
-
+   border-radius: 1rem;
+   overflow: hidden;
+   font-weight:300;
+   padding: .5rem;
+   font-size: 15px;
+   cursor: pointer;
 }
+
+.select:hover{
+   background-color: #adc9ff;
+} */
+
+
+/* Style the dropdown arrow */
+select {
+   appearance: none;
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   text-indent: 1px;
+   text-overflow: '';
+ }
+ 
+ /* Style the container of the dropdown arrow */
+ select::-ms-expand {
+   display: none;
+ }
+ 
+ /* Add your custom styles for the select element */
+ .select {
+   padding: .5rem;
+   border: 1px solid #ccc;
+   border-radius: .5rem;
+   background-color: #fff;
+   width: 250px;
+   font-weight:300;
+   color: #333;
+   cursor: pointer;
+ }
+ 
+ /* Style when the select is focused */
+ select:focus {
+   outline: none;
+   border-color: #adc9ff;
+   box-shadow: 0 0 5px #adc9ff; /*rgba(0, 123, 255, 0.5);*/
+ }
+ 
+ /* Style the dropdown list options */
+ .select option {
+   background-color: #fff;
+   color: #333;
+ }
+ 
+ /* Style the hover state of options */
+ .select option:hover {
+   background-color: #99EDC3;
+ }
+
+
+
+ .MuiIconButton-root:hover {
+   background-color: #ffcc00; 
+ }

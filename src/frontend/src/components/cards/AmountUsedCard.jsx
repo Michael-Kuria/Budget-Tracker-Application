@@ -33,7 +33,11 @@ const AmountUsedCard = ({ totalExpenses }) => {
         gap: "2rem",
       }}
     >
-      <Typography component="p" variant="body2" sx={{ lineHeight: 0.5, fontWeight: 300}}>
+      <Typography
+        component="p"
+        variant="body2"
+        sx={{ lineHeight: 0.5, fontWeight: 300 }}
+      >
         Amount used
       </Typography>
       <Typography
@@ -41,7 +45,7 @@ const AmountUsedCard = ({ totalExpenses }) => {
         variant="subtitle1"
         sx={{ fontWeight: 500, lineHeight: 0.5 }}
       >
-        Ksh {totalExpenses}
+        Ksh {Intl.NumberFormat("en-US", 2).format(totalExpenses)}
       </Typography>
       {/* <Typography component="p" variant="body2">
         spent already

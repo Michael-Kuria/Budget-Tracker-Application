@@ -28,7 +28,7 @@ const BalanceCard = ({ balance, budget }) => {
         sx={{ fontWeight: 500, lineHeight: 0.5 }}
       >
         {budget.budget !== undefined ? (
-          `Ksh ${balance}`
+          `Ksh ${Intl.NumberFormat("en-US",2).format(balance)}`
         ) : (
           <Button>
             {" "}

@@ -80,7 +80,7 @@ const Sidebar = ({
         </IconButton>
       </Toolbar>
       <Divider />
-      <List>
+      <List >
         <Link to="/overview">
           <ListItem>
             <ListItemButton>

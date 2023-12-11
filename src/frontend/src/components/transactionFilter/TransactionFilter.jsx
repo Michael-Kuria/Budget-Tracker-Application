@@ -20,7 +20,8 @@ const TransactionFilter = () => {
         height: "100%",
         display: "flex",
         justifyContent: "flex-end",
-        alignItems: "flex-end",
+        alignItems: "center",
+        gap: ".5rem",
       }}
     >
       <select

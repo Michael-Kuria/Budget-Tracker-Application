@@ -13,13 +13,13 @@ const Title = ({ title, subTitle }) => {
     >
       <Typography
         component="h1"
-        variant="h3"
+        variant="h4"
         color="inherit"
-        sx={{ fontWeight: "600", letterSpacing: "1.5px" }}
+        sx={{ fontWeight: "500", letterSpacing: "1.5px" }}
       >
         {title}
       </Typography>
-      <Typography component="h6" variant="body1" color="#4c9c73">
+      <Typography component="h6" variant="body2" sx={{ fontWeight: "300" }}>
         {subTitle}
       </Typography>
     </Box>

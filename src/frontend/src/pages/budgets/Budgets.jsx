@@ -123,7 +123,7 @@ const Budgets = () => {
             startIcon={<AddIcon />}
             sx={{
               borderRadius: "100px",
-              backgroundColor: "#007bff",
+              backgroundColor: "#3A7AFF",
               width: "fit-content",
             }}
             onClick={toggleBudgetDrawer}
@@ -154,16 +154,18 @@ const Budgets = () => {
               // color: colors.greenAccent[300],
             },
             "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: "#007bff", //3379FF
+              backgroundColor: "#3A7AFF", //3379FF
               borderBottom: "none",
               fontSize: "1.1rem",
+              color:"#ffff"
             },
             "& .MuiDataGrid-virtualScroller": {
               // backgroundColor: "#adc9ff",
             },
             "& .MuiDataGrid-footerContainer": {
               borderTop: "none",
-              backgroundColor: "#007bff",
+              backgroundColor: "#3A7AFF",
+              color: "#ffff",
             },
             "& .MuiCheckbox-root": {
               // color: `${colors.greenAccent[200]} !important`,

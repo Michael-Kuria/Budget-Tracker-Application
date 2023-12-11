@@ -51,6 +51,7 @@ const Topbar = ({
       position="absolute"
       open={isSidebarDrawerOpen}
       sidebarWidth={sidebarWidth}
+      elevation={1}
     >
       <Toolbar>
         <IconButton
@@ -76,15 +77,15 @@ const Topbar = ({
           <Button
             variant="contained"
             startIcon={<AddIcon />}
-            sx={{ borderRadius: "100px", backgroundColor: "#007bff" }}
+            sx={{ borderRadius: "100px", backgroundColor: "#3A7AFF" }}
             onClick={toggleTransactionDrawer}
           >
-            Transaction
+            Expense
           </Button>
 
           <Button
             variant="contained"
-            sx={{ borderRadius: "100px", backgroundColor: "#007bff" }}
+            sx={{ borderRadius: "100px", backgroundColor: "#3A7AFF" }}
             onClick={userLogout}
           >
             Logout
