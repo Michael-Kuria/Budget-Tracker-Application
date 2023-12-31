@@ -25,7 +25,7 @@ const TransactionDrawer = ({
   transactionToEdit,
   setTransactionToEdit,
 }) => {
-  const [date, setDate] = useState(transactionToEdit.date);
+  // const [date, setDate] = useState(transactionToEdit.date);
   const [drawerName, setDrawerName] = useState("New");
   const { getToken } = useAuth();
   const [enableReinitializeValue, setEnableReinitializeValue] = useState(false);
@@ -83,7 +83,7 @@ const TransactionDrawer = ({
 
   const formik = useFormik({
     initialValues: {
-      date: date,
+      date: new Date(),
       category: categories.findIndex(
         (item) => item.name === transactionToEdit.category.name
       ),
@@ -108,17 +108,19 @@ const TransactionDrawer = ({
    * The date field is already being maintained as a state, this function will
    * update the value when it is received as a String from the table during editting or as a date during resetting
    * when the transactionToEdit state changes
+   * 
+   * This function will be changed it is currently just changing the name of the drawer
    *
    */
   useEffect(() => {
     if (!(transactionToEdit.date instanceof Date)) {
       setDrawerName("Edit");
       setEnableReinitializeValue(true);
-      setDate(new Date(transactionToEdit.date));
+      // setDate(new Date(transactionToEdit.date));
     } else {
       setDrawerName("Add");
       setEnableReinitializeValue(false);
-      setDate(transactionToEdit.date);
+      // setDate(transactionToEdit.date);
     }
   }, [transactionToEdit]);
 
@@ -150,11 +152,14 @@ const TransactionDrawer = ({
             <FormLabel htmlFor="date">Date</FormLabel>
             <DatePicker
               id="date"
+              name="date"
               className="date-picker"
-              selected={date}
+              selected={formik.getFieldProps("date").value}
               dateFormat="yyyy-MM-dd"
               {...formik.getFieldProps("date")}
-              onChange={(dt) => setDate(dt)}
+              onChange={(dt) => {
+                formik.setFieldValue("date", dt);
+              }}
             />
             <FormErrorMessage>{formik.errors.date}</FormErrorMessage>
           </FormControl>

@@ -152,7 +152,6 @@ const Main = () => {
     getMonthAndYears(token)
       .then((res) => res.json())
       .then((data) => {
-        console.log("Here We Go");
         console.log(data);
         setFilterList([
           {
