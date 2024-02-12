@@ -36,10 +36,12 @@ const TransactionDrawer = ({
   const resetTransactionToEdit = () => {
     setTransactionToEdit({
       date: new Date(),
-      category: categories.findIndex((item) => item.name === "Housing"),
+      category: {name: "Housing"},//categories.findIndex((item) => item.name === "Housing"),
       amount: 0,
       description: "",
     });
+
+    console.log(transactionToEdit.id + " name: " + transactionToEdit.name);
   };
 
   /**
@@ -67,6 +69,9 @@ const TransactionDrawer = ({
    * Category is an integer but it will need to be mapped to it's respective Category object
    */
   const handleSubmitForm = (transaction) => {
+    console.log(
+      "Transaction about to be posted: " + JSON.stringify(transaction)
+    );
     addTransaction({
       ...transaction,
       category: categories[parseInt(transaction.category)],
@@ -83,10 +88,8 @@ const TransactionDrawer = ({
 
   const formik = useFormik({
     initialValues: {
-      date: new Date(),
-      category: categories.findIndex(
-        (item) => item.name === transactionToEdit.category.name
-      ),
+      date: new Date(transactionToEdit.date),
+      category: categories.findIndex((item) => item.name === transactionToEdit.category.name),
       amount: transactionToEdit.amount,
       description: transactionToEdit.description,
     },
@@ -108,7 +111,7 @@ const TransactionDrawer = ({
    * The date field is already being maintained as a state, this function will
    * update the value when it is received as a String from the table during editting or as a date during resetting
    * when the transactionToEdit state changes
-   * 
+   *
    * This function will be changed it is currently just changing the name of the drawer
    *
    */
@@ -117,10 +120,12 @@ const TransactionDrawer = ({
       setDrawerName("Edit");
       setEnableReinitializeValue(true);
       // setDate(new Date(transactionToEdit.date));
+      formik.setFieldValue("date", new Date(transactionToEdit.date));
     } else {
       setDrawerName("Add");
       setEnableReinitializeValue(false);
       // setDate(transactionToEdit.date);
+      formik.setFieldValue("date", transactionToEdit.date);
     }
   }, [transactionToEdit]);
 
@@ -167,7 +172,11 @@ const TransactionDrawer = ({
             isInvalid={formik.touched.category && formik.errors.category}
           >
             <FormLabel htmlFor="category">Category</FormLabel>
-            <select id="category" {...formik.getFieldProps("category")}>
+            <select
+              id="category"
+              {...formik.getFieldProps("category")}
+              selected="2"
+            >
               {categories.map((category, index) => {
                 return (
                   <option key={index} value={index}>

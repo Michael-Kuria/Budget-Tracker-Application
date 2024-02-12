@@ -43,6 +43,7 @@ const TransactionsTable = ({
    */
   const handleEditTransaction = (transaction) => {
     setTransactionToEdit(transaction);
+    console.log("Transaction about to be edited: " + JSON.stringify(transaction) )
     toggleTransactionDrawer();
   };
 

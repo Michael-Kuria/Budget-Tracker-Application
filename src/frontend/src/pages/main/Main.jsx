@@ -32,12 +32,8 @@ const Main = () => {
   const [categories, setCategories] = useState([]);
   const [balance, setBalance] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
-  const [transactionToEdit, setTransactionToEdit] = useState({
-    date: new Date(),
-    category: { name: "Housing" },
-    amount: 0,
-    description: "",
-  });
+  const [transactionToEdit, setTransactionToEdit] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
   const { token, getToken, isUserAuthenticated } = useAuth();
   const tokenFromLocalStorage = getToken();
 
@@ -179,6 +175,14 @@ const Main = () => {
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);
+        console.log("Categories are here" + JSON.stringify(categories));
+        setTransactionToEdit({
+          date: new Date(),
+          category: {name: "Housing"},//categories.findIndex((item) => item.name === "Housing"),
+          amount: 0,
+          description: "",
+        });
+
       })
       .catch((error) => {
         console.log(error.message);
@@ -243,6 +247,8 @@ const Main = () => {
           toggleTransactionDrawer={toggleTransactionDrawer}
           fetchCategoriesAndSum={fetchCategoriesAndSum}
           transactionToEdit={transactionToEdit}
+          isEditing ={isEditing}
+          setIsEditing = {setIsEditing}
           setTransactionToEdit={setTransactionToEdit}
         />
       </ProtectedComponent>
